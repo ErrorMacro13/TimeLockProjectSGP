@@ -9,7 +9,7 @@ public class FireBallScript : MonoBehaviour
     public float BallSpeed = 3.0f;
     public float LifeSpan = 5.0f;
     public float BounceHeight;
-    float VertSpeed = 0f;
+    public float VertSpeed = 0f;
     public bool GoingUp = false;
     // Use this for initialization
     void Start()
@@ -114,5 +114,13 @@ public class FireBallScript : MonoBehaviour
     void SetBounce(float f)
     {
         BounceHeight = f;
+    }
+    void SetUp(bool b)
+    {
+        GoingUp = b;
+    }
+    void SetVertSpeed(float f)
+    {
+        VertSpeed = f;
     }
 }
