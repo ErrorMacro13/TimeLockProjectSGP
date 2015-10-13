@@ -12,6 +12,8 @@ public class FireBallCannonScript : MonoBehaviour {
     public float BallSpeed = 3.0f;
     public float LifeSpan = 5.0f;
     public float BounceHeight = 3.0f;
+    public float VertSpeed;
+    public bool GoingUp;
     public bool Left = false;
     public float TimeBetweenShots;
     public float InitialDelay;
@@ -43,6 +45,8 @@ public class FireBallCannonScript : MonoBehaviour {
         TempBall.SendMessage("SetBallSpeed", BallSpeed);
         TempBall.SendMessage("SetLeft", Left);
         TempBall.SendMessage("SetBounce", BounceHeight);
+        TempBall.SendMessage("SetUp", GoingUp);
+        TempBall.SendMessage("SetVertSpeed", VertSpeed);
         switch (SpeedCase)
         {
             case 0:

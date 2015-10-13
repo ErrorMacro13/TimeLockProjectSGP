@@ -41,7 +41,7 @@ public class CameraBehavior : MonoBehaviour
 
     void ResetOverWorld()
     {
-        camPosition = new Vector3(3.75f, 3, -20);
+        camPosition = new Vector3(3.75f, 3 + Player.transform.position.y, -20);
         GetComponent<Camera>().orthographicSize = 5;
         VertLocked = true;
     }

@@ -66,6 +66,7 @@ public class XMLScript : MonoBehaviour
         CPS = LoadPlayersStats();
         if (LevelText != null) LevelText.text = "Level "+(CPS.level+1);
         ApplySettings();
+        if (Application.loadedLevelName == "HighScores") OrganizeLevelFiles();
     }
     void StartGame()
     {
@@ -230,7 +231,7 @@ public class XMLScript : MonoBehaviour
                     scores.Add(level.Arcade_Scores[j]);
                 }
                 scores.Sort((l1, l2) => (int)(l2.score - l1.score));
-                times.Sort((l1, l2) => (int)(l1.time - l2.time));
+                times.Sort((l1, l2) => l1.time.CompareTo(l2.time));
                 level.Free_Play_Times = times.ToArray();
                 level.Arcade_Scores = scores.ToArray();
                 SaveLevel(level, i);
@@ -248,7 +249,7 @@ public class XMLScript : MonoBehaviour
                 scores.Add(level.Arcade_Scores[j]);
             }
             scores.Sort((l1, l2) => (int)(l2.score - l1.score));
-            times.Sort((l1, l2) => (int)(l1.time - l2.time));
+            times.Sort((l1, l2) => l1.time.CompareTo(l2.time));
             SaveLevel(level, LevelNum);
         }
     }
@@ -301,7 +302,7 @@ public class XMLScript : MonoBehaviour
                     {
                         times.Add(tempData.Free_Play_Times[i]);
                     }
-                    times.Sort((l1, l2) => (int)(l1.time - l2.time));
+                    times.Sort((l1, l2) => l1.time.CompareTo(l2.time));
                     times.RemoveAt(times.Count - 1);
                     tempData.Free_Play_Times = times.ToArray();
                     SaveLevel(tempData, data.levelNumber);
