@@ -14,7 +14,7 @@ public class RetractingSpikeBehavior : MonoBehaviour
     private Vector3 StartLoc;
 
     private bool ChangeDirection = false;
-    public bool enabled = false;
+    public bool Running = false;
 
     private float DelayEmerge;
     private float DelayRetract;
@@ -55,7 +55,7 @@ public class RetractingSpikeBehavior : MonoBehaviour
     // ChangeDirectiondate is called once per frame
     void FixedUpdate()
     {
-        if (enabled)
+        if (Running)
         {
             if (InitialDelay <= 0.0f)
             {
@@ -171,8 +171,8 @@ public class RetractingSpikeBehavior : MonoBehaviour
     void ToggleActive(bool isActive)
     {
         if (isActive)
-            enabled = true;
+            Running = true;
         else
-            enabled = false;
+            Running = false;
     }
 }

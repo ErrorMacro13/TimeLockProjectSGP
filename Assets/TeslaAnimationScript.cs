@@ -11,6 +11,7 @@ public class TeslaAnimationScript : MonoBehaviour
     private float ArcLength;
     public float MaxArcs = 5;
     private bool Hiden = false;
+    bool Running = false;
     ////private List<float> ArcLengths;
     ////private List<GameObject> Arcs;
 
@@ -39,48 +40,51 @@ public class TeslaAnimationScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!Hiden)
+        if (Running)
         {
-            if (ArcTime <= 0)
+            if (!Hiden)
             {
-                ArcTime = TimeBetweenArcs;
-                for (int i = 0; i < 9; i++)
+                if (ArcTime <= 0)
                 {
-                    images[i].GetComponent<Transform>().localScale = new Vector3(0, 0, 0);
+                    ArcTime = TimeBetweenArcs;
+                    for (int i = 0; i < 9; i++)
+                    {
+                        images[i].GetComponent<Transform>().localScale = new Vector3(0, 0, 0);
+                    }
+                    for (int i = 0; i < Random.Range(1, MaxArcs); i++)
+                    {
+                        int index = Random.Range(0, 8);
+                        if (images[index].GetComponent<Transform>().localScale != new Vector3(1, 1, 1))
+                            images[index].GetComponent<Transform>().localScale = new Vector3(1, 1, 1);
+                    }
                 }
-                for (int i = 0; i < Random.Range(1, MaxArcs); i++)
-                {
-                    int index = Random.Range(0, 8);
-                    if (images[index].GetComponent<Transform>().localScale != new Vector3(1, 1, 1))
-                        images[index].GetComponent<Transform>().localScale = new Vector3(1, 1, 1);
-                }
+                else ArcTime -= Time.deltaTime;
             }
-            else ArcTime -= Time.deltaTime;
-        }
-        else
-        {
+            else
+            {
 
-        }
+            }
 
-        ////if (!(Arcs.Count == MaxArcs) && ArcTime <= 0)
-        ////{
-        ////    ArcTime = TimeBetweenArcs;
-        ////    DrawImage();
-        ////}
-        ////else
-        ////{
-        ////    ArcTime -= Time.deltaTime;
-        ////}
-        ////for (int i = 0; i < ArcLengths.Count; i++)
-        ////{
-        ////    if (ArcLengths[i] <= 0)
-        ////    {
-        ////        Destroy(Arcs[i]);
-        ////        Arcs.RemoveAt(i);
-        ////        ArcLengths.RemoveAt(i);
-        ////    }
-        ////    else ArcLengths[i] -= Time.deltaTime;
-        ////}
+            ////if (!(Arcs.Count == MaxArcs) && ArcTime <= 0)
+            ////{
+            ////    ArcTime = TimeBetweenArcs;
+            ////    DrawImage();
+            ////}
+            ////else
+            ////{
+            ////    ArcTime -= Time.deltaTime;
+            ////}
+            ////for (int i = 0; i < ArcLengths.Count; i++)
+            ////{
+            ////    if (ArcLengths[i] <= 0)
+            ////    {
+            ////        Destroy(Arcs[i]);
+            ////        Arcs.RemoveAt(i);
+            ////        ArcLengths.RemoveAt(i);
+            ////    }
+            ////    else ArcLengths[i] -= Time.deltaTime;
+            ////}
+        }
     }
 
     void DrawImage()
@@ -115,5 +119,12 @@ public class TeslaAnimationScript : MonoBehaviour
     void ResetOverWorld()
     {
         Start();
+    }
+    void ToggleActive(bool isActive)
+    {
+        if (isActive)
+            Running = true;
+        else
+            Running = false;
     }
 }
