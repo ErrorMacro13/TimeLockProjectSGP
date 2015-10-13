@@ -7,7 +7,7 @@ public class FallingSpikeBehavior : MonoBehaviour
     public float dropSpeed = 3;
     public float DropDistance = 2;
     public float dropDelay = 0;
-    private float delayDrop = 0;
+    public float delayDrop = 0;
     float CurrGameSpeed = 1.0f;
     private Vector3 startLoc;
     public Sprite nonactive;
@@ -35,7 +35,6 @@ public class FallingSpikeBehavior : MonoBehaviour
     void Start()
     {
         startLoc = transform.position;
-        GetComponent<Rigidbody2D>().freezeRotation = true;
         delayDrop = dropDelay;
         GetComponent<SpriteRenderer>().sprite = nonactive;
     }
@@ -44,9 +43,11 @@ public class FallingSpikeBehavior : MonoBehaviour
     void Update()
     {
         if (drop)
+        {
             if (delayDrop <= 0)
                 Fall(Time.deltaTime);
-            else delayDrop -= Time.deltaTime;
+            else delayDrop -= Time.deltaTime * CurrGameSpeed;
+        }
     }
     void Fall(float dt)
     {
