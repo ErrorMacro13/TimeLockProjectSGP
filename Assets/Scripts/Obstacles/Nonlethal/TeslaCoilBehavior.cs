@@ -7,8 +7,8 @@ public class TeslaCoilBehavior : MonoBehaviour {
     float countdown;
     public GameObject anim;
     public GameObject anim2;
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
         countdown = TimeBeforeRecharge;
 	}
 	

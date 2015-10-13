@@ -17,7 +17,7 @@ public class GunTurretBehavior : MonoBehaviour
     public float InitialDelay;
     float ID;
 
-    public bool enabled;
+    public bool Running;
     // Use this for initialization
     void ResetOverWorld()
     {
@@ -39,7 +39,7 @@ public class GunTurretBehavior : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (enabled)
+        if (Running)
         {
             Percent = InitialDelay / TimeBetweenShots;
             InitialDelay -= Time.deltaTime * CurrGameSpeed;
@@ -89,9 +89,9 @@ public class GunTurretBehavior : MonoBehaviour
     void ToggleActive(bool isActive)
     {
         if (isActive)
-            enabled = true;
+            Running = true;
         else
-            enabled = false;
+            Running = false;
     }
 
     void SetTime(int GameSpeed)

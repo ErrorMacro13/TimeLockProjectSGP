@@ -9,11 +9,11 @@ public class TreadmillBehavior : MonoBehaviour
     public bool leftDirection = true;
     public AreaEffector2D aEffector;
     public GameObject[] rotators;
-
+    bool Running;
     // Use this for initialization
     void Start()
     {
-       
+
         if (leftDirection)
         {
             magnitude = -200;
@@ -37,8 +37,11 @@ public class TreadmillBehavior : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        SetMagnitude();
-        Rotate();
+        if (Running)
+        {
+            SetMagnitude();
+            Rotate();
+        }
     }
 
     void SetMagnitude()
@@ -71,5 +74,12 @@ public class TreadmillBehavior : MonoBehaviour
                 CurrGameSpeed = 1.0f;
                 break;
         }
+    }
+    void ToggleActive(bool isActive)
+    {
+        if (isActive)
+            Running = true;
+        else
+            Running = false;
     }
 }

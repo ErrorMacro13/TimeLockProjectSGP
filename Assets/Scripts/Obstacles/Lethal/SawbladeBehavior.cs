@@ -11,7 +11,7 @@ public class SawbladeBehavior : MonoBehaviour
     bool XPass = false;
     bool YPass = false;
     public float spin = 5000;
-
+    bool Running;
     // Use this for initialization
     void Start()
     {
@@ -29,45 +29,48 @@ public class SawbladeBehavior : MonoBehaviour
     void Update()
     {
         //Rotation
-        transform.Rotate(Vector3.back * Time.deltaTime * CurrGameSpeed * spin);
-
-        if (transform.position.x > Waypoints[currWaypoint].position.x && !XPass)
+        if (Running)
         {
-            transform.position -= new Vector3(Speed * CurrGameSpeed * Time.deltaTime, 0, 0);
-            if (transform.position.x <= Waypoints[currWaypoint].position.x)
+            transform.Rotate(Vector3.back * Time.deltaTime * CurrGameSpeed * spin);
+
+            if (transform.position.x > Waypoints[currWaypoint].position.x && !XPass)
+            {
+                transform.position -= new Vector3(Speed * CurrGameSpeed * Time.deltaTime, 0, 0);
+                if (transform.position.x <= Waypoints[currWaypoint].position.x)
+                    XPass = true;
+            }
+            else if (transform.position.x < Waypoints[currWaypoint].position.x && !XPass)
+            {
+                transform.position += new Vector3(Speed * CurrGameSpeed * Time.deltaTime, 0, 0);
+                if (transform.position.x >= Waypoints[currWaypoint].position.x)
+                    XPass = true;
+            }
+            else
                 XPass = true;
-        }
-        else if (transform.position.x < Waypoints[currWaypoint].position.x && !XPass)
-        {
-            transform.position += new Vector3(Speed * CurrGameSpeed * Time.deltaTime, 0, 0);
-            if (transform.position.x >= Waypoints[currWaypoint].position.x)
-                XPass = true;
-        }
-        else
-            XPass = true;
 
-        if (transform.position.y > Waypoints[currWaypoint].position.y && !YPass)
-        {
-            transform.position -= new Vector3(0, Speed * CurrGameSpeed * Time.deltaTime, 0);
-            if (transform.position.y <= Waypoints[currWaypoint].position.y)
+            if (transform.position.y > Waypoints[currWaypoint].position.y && !YPass)
+            {
+                transform.position -= new Vector3(0, Speed * CurrGameSpeed * Time.deltaTime, 0);
+                if (transform.position.y <= Waypoints[currWaypoint].position.y)
+                    YPass = true;
+            }
+            else if (transform.position.y < Waypoints[currWaypoint].position.y && !YPass)
+            {
+                transform.position += new Vector3(0, Speed * CurrGameSpeed * Time.deltaTime, 0);
+                if (transform.position.y >= Waypoints[currWaypoint].position.y)
+                    YPass = true;
+            }
+            else
                 YPass = true;
-        }
-        else if (transform.position.y < Waypoints[currWaypoint].position.y && !YPass)
-        {
-            transform.position += new Vector3(0, Speed * CurrGameSpeed * Time.deltaTime, 0);
-            if (transform.position.y >= Waypoints[currWaypoint].position.y)
-                YPass = true;
-        }
-        else
-            YPass = true;
 
-        if (YPass && XPass)
-        {
-            currWaypoint++;
-            XPass = false;
-            YPass = false;
-            if (currWaypoint >= Waypoints.Length)
-                currWaypoint = 0;
+            if (YPass && XPass)
+            {
+                currWaypoint++;
+                XPass = false;
+                YPass = false;
+                if (currWaypoint >= Waypoints.Length)
+                    currWaypoint = 0;
+            }
         }
     }
 
@@ -88,5 +91,12 @@ public class SawbladeBehavior : MonoBehaviour
                 CurrGameSpeed = 1.0f;
                 break;
         }
+    }
+    void ToggleActive(bool isActive)
+    {
+        if (isActive)
+            Running = true;
+        else
+            Running = false;
     }
 }

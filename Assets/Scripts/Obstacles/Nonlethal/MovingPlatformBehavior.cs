@@ -11,7 +11,7 @@ public class MovingPlatformBehavior : MonoBehaviour
 
     private bool ChangeDirection = false;
     private bool Halt = false;
-    public bool enabled;
+    public bool Running;
 
     private Vector3 StartLoc;
 
@@ -54,7 +54,7 @@ public class MovingPlatformBehavior : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (enabled)
+        if (Running)
         {
             if (VerticalMovement)
                 MoveDownUp(Time.deltaTime);
@@ -126,9 +126,9 @@ public class MovingPlatformBehavior : MonoBehaviour
     void ToggleActive(bool isActive)
     {
         if (isActive)
-            enabled = true;
+            Running = true;
         else
-            enabled = false;
+            Running = false;
     }
 
     void OnTriggerEnter2D(Collider2D ent)
