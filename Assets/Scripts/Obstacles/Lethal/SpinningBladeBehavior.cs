@@ -6,6 +6,7 @@ public class SpinningBladeBehavior : MonoBehaviour
     float CurrGameSpeed = 1.0f;
     public float rotateSpeed = 10.0f;
     public bool Clockwise = false;
+    public bool Running;
     // Use this for initialization
     void Start()
     {
@@ -15,21 +16,24 @@ public class SpinningBladeBehavior : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!Clockwise)
-            transform.Rotate(0, 0, rotateSpeed * CurrGameSpeed * Time.timeScale);
-        else
-            transform.Rotate(0, 0, -rotateSpeed * CurrGameSpeed * Time.timeScale);
+        if (Running)
+        {
+            if (!Clockwise)
+                transform.Rotate(0, 0, rotateSpeed * CurrGameSpeed * Time.timeScale);
+            else
+                transform.Rotate(0, 0, -rotateSpeed * CurrGameSpeed * Time.timeScale);
 
 
-        if (CurrGameSpeed < 0.25f)
-        {
-            tag = "Untagged";
-            GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 0.25f);
-        }
-        else if (CurrGameSpeed >= 0.25f)
-        {
-            tag = "Lethal";
-            GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 1f);
+            if (CurrGameSpeed < 0.25f)
+            {
+                tag = "Untagged";
+                GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 0.25f);
+            }
+            else if (CurrGameSpeed >= 0.25f)
+            {
+                tag = "Lethal";
+                GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 1f);
+            }
         }
     }
 
@@ -52,6 +56,19 @@ public class SpinningBladeBehavior : MonoBehaviour
         }
     }
 
-    void ResetOverWorld() { }
+    void ResetOverWorld()
+    {
 
+    }
+    void ToggleActive(bool isActive)
+    {
+        if (isActive)
+        {
+            Running = true;
+        }
+        else
+        {
+            Running = false;
+        }
+    }
 }

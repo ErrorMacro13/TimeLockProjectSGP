@@ -70,6 +70,8 @@ public class GameWorldScript : MonoBehaviour
     {
         saver = GameObject.Find("SaveDataLoader");
         soundm = GameObject.Find("SoundManager");
+        Player = GameObject.Find("Player");
+        CameraOne = GameObject.Find("Main Camera");
     }
     // Update is called once per frame
     void Update()
@@ -104,15 +106,15 @@ public class GameWorldScript : MonoBehaviour
         //resume speed
         else if (((Input.GetKeyDown(KeyCode.Keypad3) || Input.GetKeyDown(KeyCode.RightArrow)) || TimeGauge <= 0) && Time.timeScale > 0.0f)
         {
-                if (GameTime != 0)
-                {
-                    TimeSpeedAfx.Play();
-                }
-                SlowSpeed = 0;
-                GameTime = 0;
-                BroadcastMessage("SetTime", GameTime);
-                CameraOne.GetComponent<AudioSource>().pitch = 1.0f;
-            
+            if (GameTime != 0)
+            {
+                TimeSpeedAfx.Play();
+            }
+            SlowSpeed = 0;
+            GameTime = 0;
+            BroadcastMessage("SetTime", GameTime);
+            CameraOne.GetComponent<AudioSource>().pitch = 1.0f;
+
         }
         if (GameTime != 0 && !DisableDrain)
             Drain(Time.deltaTime);
@@ -161,16 +163,16 @@ public class GameWorldScript : MonoBehaviour
     {
         GUIStyle ManaBarStyle = new GUIStyle();
         ManaBarStyle.fontSize = 40;
-        Rect PercentBar = new Rect(90, 50, TimeGauge + (TimeGauge/15), 45);
+        Rect PercentBar = new Rect(90, 50, TimeGauge + (TimeGauge / 15), 45);
         Rect TimeSymbol = new Rect(270, 35, 40, 40);
         //Rect AboveHeadBar = new Rect(420, 180, TimeGauge + 5, 5);
         float mana = Mathf.Round(TimeGauge);
         GUI.DrawTexture(new Rect(Screen.width - 410, 30, 500, 85), TimerBG);
         GUI.DrawTexture(new Rect(10, -21, 360, 200), GauntletBG);
         GUI.skin = MeterSkin;
-        float green = TimeGauge/100;
-        float red = 1-green;
-        GUI.color = new Color(red,green,0);
+        float green = TimeGauge / 100;
+        float red = 1 - green;
+        GUI.color = new Color(red, green, 0);
         GUI.Box(PercentBar, "");
         GUI.color = new Color(1, 1, 1);
         //if(TimeGauge > 0.0f)
@@ -199,7 +201,10 @@ public class GameWorldScript : MonoBehaviour
         ElapsedTime = time;
         if (ActiveTimer)
             TimeOnTimer = time;
-        GUI.Label(Timer, (TimeOnTimer - TimeBeforeDeath).ToString(), ManaBarStyle);
+        if (TimeOnTimer - TimeBeforeDeath < 0.0f)
+            GUI.Label(Timer, 0.0f.ToString(), ManaBarStyle);
+        else
+            GUI.Label(Timer, (TimeOnTimer - TimeBeforeDeath).ToString(), ManaBarStyle);
         GUI.Label(TimerLabel, "Elapsed Time: ", ManaBarStyle);
         if (soundm.GetComponent<SoundManager>().GameState == 1)
         {
@@ -247,7 +252,7 @@ public class GameWorldScript : MonoBehaviour
     {
         int tempT = (int)GetTime();
         int tempS = (int)Player.GetComponent<PlayerController>().GetScore();
-        return ((int)(64000 / (1/GetTime())) + tempS);
+        return ((int)(64000 / (1 / GetTime())) + tempS);
     }
     void SavePlayersData(PlayersData data)
     {

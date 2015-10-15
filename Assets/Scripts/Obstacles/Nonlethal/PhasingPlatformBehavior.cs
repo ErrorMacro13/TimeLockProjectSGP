@@ -13,6 +13,7 @@ public class PhasingPlatformBehavior : MonoBehaviour {
     private Transform origTrans;
     private float CurrGameSpeed = 1.0f;
     private GameObject child;
+    public bool Running;
     void SetTime(short GameSpeed)
     {
         switch (GameSpeed)
@@ -43,6 +44,7 @@ public class PhasingPlatformBehavior : MonoBehaviour {
         gameObject.GetComponent<Renderer>().material.SetColor("_Color", newcolor);
         DelayPhazeIn = PhazeInDelay;
         DelayPhazeOut = PhazeOutDelay;
+        Running = false;
     }
 	// Use this for initialization
 	void Start () {
@@ -50,30 +52,34 @@ public class PhasingPlatformBehavior : MonoBehaviour {
         origTrans = transform;
         DelayPhazeIn = PhazeInDelay;
         DelayPhazeOut = PhazeOutDelay;
-	}
-	
-	// Update is called once per frame
-	void Update () {
-        if (PhazeOut)
+        GetComponent<Animator>().SetTrigger("PauseTrigger");
+    }
+
+    // Update is called once per frame
+    void Update () {
+        if (Running)
         {
-            if (DelayPhazeOut <= 0)
+            if (PhazeOut)
             {
-                Phaze();
+                if (DelayPhazeOut <= 0)
+                {
+                    Phaze();
+                }
+                else
+                {
+                    DelayPhazeOut -= Time.deltaTime;
+                }
             }
-            else
+            else if (PhazeIn)
             {
-                DelayPhazeOut -= Time.deltaTime;
-            }
-        }
-        else if (PhazeIn)
-        {
-            if (DelayPhazeIn <= 0)
-            {
-                Phaze();
-            }
-            else
-            {
-                DelayPhazeIn -= Time.deltaTime;
+                if (DelayPhazeIn <= 0)
+                {
+                    Phaze();
+                }
+                else
+                {
+                    DelayPhazeIn -= Time.deltaTime;
+                }
             }
         }
 	}
@@ -123,6 +129,19 @@ public class PhasingPlatformBehavior : MonoBehaviour {
             child.GetComponent<Renderer>().material.SetColor("_Color", color);
             gameObject.GetComponent<Renderer>().material.SetColor("_Color", color);
             
+        }
+    }
+    void ToggleActive(bool isActive)
+    {
+        if (isActive)
+        {
+            Running = true;
+            GetComponent<Animator>().SetTrigger("PlayTrigger");
+        }
+        else
+        {
+            Running = false;
+            GetComponent<Animator>().SetTrigger("PauseTrigger");
         }
     }
 }

@@ -103,6 +103,10 @@ public class CheckPointScript : MonoBehaviour
     }
     void ResetOverWorld()
     {
-        Door.transform.position = doorpos;
+        if (tag != "Checkpoint")
+        {
+            Door.transform.position = doorpos;
+            hit = false;
+        }
     }
 }

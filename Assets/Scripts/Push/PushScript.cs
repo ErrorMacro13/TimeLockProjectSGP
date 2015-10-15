@@ -15,79 +15,91 @@ public class PushScript : MonoBehaviour
     int currWaypoint;
     bool XPass = false;
     bool YPass = false;
+
+    float StartRot;
+    float StartRotSpeed;
+    float StartSpeed;
+    Vector3 StartPos;
+    bool Running;
     // Use this for initialization
     void Start()
     {
-
+        StartPos = transform.position;
+        StartRot = currRot;
+        StartSpeed = Speed;
+        StartRotSpeed = RotSpeed;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (name == "LevelPush2")
-        transform.Rotate(Vector3.back * Time.deltaTime * CurrGameSpeed * spin);
+        if (Running)
+        {
+            if (name == "LevelPush2")
+                transform.Rotate(Vector3.back * Time.deltaTime * CurrGameSpeed * spin);
 
-        if (transform.position.x > Waypoints[currWaypoint].position.x && !XPass)
-        {
-            transform.position -= new Vector3(Speed * CurrGameSpeed * Time.deltaTime, 0, 0);
-            if (transform.position.x <= Waypoints[currWaypoint].position.x)
-                XPass = true;
-        }
-        else if (transform.position.x < Waypoints[currWaypoint].position.x && !XPass)
-        {
-            transform.position += new Vector3(Speed * CurrGameSpeed * Time.deltaTime, 0, 0);
-            if (transform.position.x >= Waypoints[currWaypoint].position.x)
-                XPass = true;
-        }
-        else
-            XPass = true;
-
-        if (transform.position.y > Waypoints[currWaypoint].position.y && !YPass)
-        {
-            transform.position -= new Vector3(0, Speed * CurrGameSpeed * Time.deltaTime, 0);
-            if (transform.position.y <= Waypoints[currWaypoint].position.y)
-                YPass = true;
-        }
-        else if (transform.position.y < Waypoints[currWaypoint].position.y && !YPass)
-        {
-            transform.position += new Vector3(0, Speed * CurrGameSpeed * Time.deltaTime, 0);
-            if (transform.position.y >= Waypoints[currWaypoint].position.y)
-                YPass = true;
-        }
-        else
-            YPass = true;
-
-        if (YPass && XPass)
-        {
-            print("laserupdate");
-            Speed = Waypoints[currWaypoint].localScale.x;
-            RotSpeed = Waypoints[currWaypoint].localScale.y;
-            newRot = Waypoints[currWaypoint].localScale.z;
-            currWaypoint++;
-            XPass = false;
-            YPass = false;
-            if (currWaypoint >= Waypoints.Length)
-                currWaypoint = 0;
-        }
-
-        if (currRot > newRot)
-        {
-            currRot -= Time.deltaTime * CurrGameSpeed * RotSpeed;
-            transform.rotation = Quaternion.AngleAxis(270 + currRot, Vector3.forward);
-            if (currRot < newRot)
+            if (transform.position.x > Waypoints[currWaypoint].position.x && !XPass)
             {
-                currRot = newRot;
-                transform.rotation = Quaternion.AngleAxis(270 + currRot, Vector3.forward);
+                transform.position -= new Vector3(Speed * CurrGameSpeed * Time.deltaTime, 0, 0);
+                if (transform.position.x <= Waypoints[currWaypoint].position.x)
+                    XPass = true;
             }
-        }
-        else if (currRot < newRot)
-        {
-            currRot += Time.deltaTime * CurrGameSpeed * RotSpeed;
-            transform.rotation = Quaternion.AngleAxis(270 + currRot, Vector3.forward);
+            else if (transform.position.x < Waypoints[currWaypoint].position.x && !XPass)
+            {
+                transform.position += new Vector3(Speed * CurrGameSpeed * Time.deltaTime, 0, 0);
+                if (transform.position.x >= Waypoints[currWaypoint].position.x)
+                    XPass = true;
+            }
+            else
+                XPass = true;
+
+            if (transform.position.y > Waypoints[currWaypoint].position.y && !YPass)
+            {
+                transform.position -= new Vector3(0, Speed * CurrGameSpeed * Time.deltaTime, 0);
+                if (transform.position.y <= Waypoints[currWaypoint].position.y)
+                    YPass = true;
+            }
+            else if (transform.position.y < Waypoints[currWaypoint].position.y && !YPass)
+            {
+                transform.position += new Vector3(0, Speed * CurrGameSpeed * Time.deltaTime, 0);
+                if (transform.position.y >= Waypoints[currWaypoint].position.y)
+                    YPass = true;
+            }
+            else
+                YPass = true;
+
+            if (YPass && XPass)
+            {
+                print("laserupdate");
+                Speed = Waypoints[currWaypoint].localScale.x;
+                RotSpeed = Waypoints[currWaypoint].localScale.y;
+                newRot = Waypoints[currWaypoint].localScale.z;
+                currWaypoint++;
+                XPass = false;
+                YPass = false;
+                if (currWaypoint >= Waypoints.Length)
+                    currWaypoint = 0;
+            }
+
             if (currRot > newRot)
             {
-                currRot = newRot;
+                currRot -= Time.deltaTime * CurrGameSpeed * RotSpeed;
                 transform.rotation = Quaternion.AngleAxis(270 + currRot, Vector3.forward);
+                if (currRot < newRot)
+                {
+                    currRot = newRot;
+                    transform.rotation = Quaternion.AngleAxis(270 + currRot, Vector3.forward);
+                }
+            }
+            else if (currRot < newRot)
+            {
+                currRot += Time.deltaTime * CurrGameSpeed * RotSpeed;
+                transform.rotation = Quaternion.AngleAxis(270 + currRot, Vector3.forward);
+                if (currRot > newRot)
+                {
+                    currRot = newRot;
+                    transform.rotation = Quaternion.AngleAxis(270 + currRot, Vector3.forward);
+                }
             }
         }
     }
@@ -112,6 +124,31 @@ public class PushScript : MonoBehaviour
                 CurrGameSpeed = 1.0f;
                 GetComponent<Animator>().speed = CurrGameSpeed;
                 break;
+        }
+    }
+
+    void ResetOverWorld()
+    {
+        XPass = false;
+        YPass = false;
+        currWaypoint = 0;
+        transform.position = StartPos;
+        currRot = StartRot;
+        Speed = StartSpeed;
+        RotSpeed = StartRotSpeed;
+        Running = false;
+        transform.rotation = Quaternion.AngleAxis(270 + currRot, Vector3.forward);
+    }
+
+    void ToggleActive(bool isActive)
+    {
+        if (isActive)
+        {
+            Running = true;
+        }
+        else
+        {
+            Running = false;
         }
     }
 }
