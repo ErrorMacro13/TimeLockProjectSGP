@@ -27,6 +27,7 @@ public class GreenPlateScript : MonoBehaviour {
         if (tempduration <= 0)
         {
             GetComponent<SpriteRenderer>().sprite = NonactiveImg;
+            BroadcastMessage("Deactivate");
             tempduration = duration;
         }
         else tempduration -= Time.deltaTime;
@@ -39,6 +40,7 @@ public class GreenPlateScript : MonoBehaviour {
             targets[i].BroadcastMessage("GreenTrigger", duration);
         }
         GetComponent<SpriteRenderer>().sprite = ActivatedImg;
+        BroadcastMessage("Activate");
         transform.localScale = new Vector3(1.0f,.5f,1.0f);
     }
     void OnTriggerExit2D(Collider2D ent)

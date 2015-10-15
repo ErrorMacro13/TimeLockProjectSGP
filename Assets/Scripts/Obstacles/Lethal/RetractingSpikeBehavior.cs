@@ -63,26 +63,13 @@ public class RetractingSpikeBehavior : MonoBehaviour
                 {
                     if (ChangeDirection)
                     {
-                        DelayEmerge -= Time.deltaTime;
+                        DelayEmerge -= Time.deltaTime * CurrGameSpeed;
                         if (DelayEmerge < 0)
                             DelayEmerge = 0;
-
-                        float percent = (DelayEmerge / EmergeDelay);
-
-                        if ((percent >= 0 && percent <= .1) || (percent >= .9 && percent <= 1))
-                            anim.GetComponent<RetractingFloorScript>().ChangeImage(0);
-                        else if ((percent >= .1 && percent <= .2) || (percent >= .8 && percent <= .9))
-                            anim.GetComponent<RetractingFloorScript>().ChangeImage(1);
-                        else if ((percent >= .2 && percent <= .3) || (percent >= .7 && percent <= .8))
-                            anim.GetComponent<RetractingFloorScript>().ChangeImage(2);
-                        else if ((percent >= .3 && percent <= .4) || (percent >= .6 && percent <= .7))
-                            anim.GetComponent<RetractingFloorScript>().ChangeImage(3);
-                        else if ((percent >= .4 && percent <= .5) || (percent >= .5 && percent <= .6))
-                            anim.GetComponent<RetractingFloorScript>().ChangeImage(4);
                     }
                     else
                     {
-                        DelayRetract -= Time.deltaTime;
+                        DelayRetract -= Time.deltaTime * CurrGameSpeed;
                     }
                     MoveDownUp(Time.deltaTime);
                 }
@@ -90,18 +77,31 @@ public class RetractingSpikeBehavior : MonoBehaviour
                 {
                     if (ChangeDirection)
                     {
-                        DelayEmerge -= Time.deltaTime;
+                        DelayEmerge -= Time.deltaTime * CurrGameSpeed;
                         
                     }
                     else
                     {
-                        DelayRetract -= Time.deltaTime;
+                        DelayRetract -= Time.deltaTime * CurrGameSpeed;
                     }
                     MoveLeftRight(Time.deltaTime);
                 }
             }
             else
-                InitialDelay -= Time.deltaTime;
+                InitialDelay -= Time.deltaTime * CurrGameSpeed;
+
+            float percent = (DelayEmerge / EmergeDelay);
+
+            if ((percent >= 0 && percent <= .1) || (percent >= .9 && percent <= 1))
+                anim.GetComponent<RetractingFloorScript>().ChangeImage(0);
+            else if ((percent >= .1 && percent <= .2) || (percent >= .8 && percent <= .9))
+                anim.GetComponent<RetractingFloorScript>().ChangeImage(1);
+            else if ((percent >= .2 && percent <= .3) || (percent >= .7 && percent <= .8))
+                anim.GetComponent<RetractingFloorScript>().ChangeImage(2);
+            else if ((percent >= .3 && percent <= .4) || (percent >= .6 && percent <= .7))
+                anim.GetComponent<RetractingFloorScript>().ChangeImage(3);
+            else if ((percent >= .4 && percent <= .5) || (percent >= .5 && percent <= .6))
+                anim.GetComponent<RetractingFloorScript>().ChangeImage(4);
         }
     }
     void MoveDownUp(float dt)
@@ -119,7 +119,7 @@ public class RetractingSpikeBehavior : MonoBehaviour
             }
         }
         else
-            RDelay -= Time.deltaTime;
+            RDelay -= Time.deltaTime * CurrGameSpeed;
 
         if (GDelay <= 0)
         {
@@ -134,7 +134,7 @@ public class RetractingSpikeBehavior : MonoBehaviour
             }
         }
         else
-            GDelay -= Time.deltaTime;
+            GDelay -= Time.deltaTime * CurrGameSpeed;
     }
     void MoveLeftRight(float dt)
     {
