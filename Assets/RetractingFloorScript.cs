@@ -10,10 +10,10 @@ public class RetractingFloorScript : MonoBehaviour {
 	}
     void ResetOverWorld()
     {
-        Start();
+        GetComponent<SpriteRenderer>().sprite = Floor[0];
     }
-	// Update is called once per frame
-	void Update () {
+    // Update is called once per frame
+    void Update () {
 	
 	}
 

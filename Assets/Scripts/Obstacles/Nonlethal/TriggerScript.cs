@@ -16,16 +16,9 @@ public class TriggerScript : MonoBehaviour {
 	}
     void OnTriggerEnter2D(Collider2D ent)
     {
-        print("Collides with: " + ent.tag);
         if (gameObject.tag != "Stop" && ent.tag == "Player")
         {
             SendMessageUpwards("Activate");
-        }
-        if (ent.tag == "Acid")
-        {
-            print("ResetAcid");
-            GetComponent<Animator>().SetTrigger("PlayTrigger");
-            ent.SendMessage("ResetOverWorld");
         }
     }
 }

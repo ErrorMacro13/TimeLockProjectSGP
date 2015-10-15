@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class DrippingAcidBehavior : MonoBehaviour {
+public class DrippingAcidBehavior : MonoBehaviour
+{
     private Vector3 StartLoc;
     public float dripSpeed = 0.2f;
     public float FallSpeed = 2;
@@ -11,8 +12,10 @@ public class DrippingAcidBehavior : MonoBehaviour {
     private float CurrGameSpeed = 1.0f;
     public GameObject endSpot;
     bool grow = true;
-	void SetTime(short GameSpeed){
-		switch (GameSpeed) {
+    void SetTime(short GameSpeed)
+    {
+        switch (GameSpeed)
+        {
             case 1:
                 CurrGameSpeed = 0.5f;
                 GetComponent<Animator>().speed = CurrGameSpeed;
@@ -29,37 +32,46 @@ public class DrippingAcidBehavior : MonoBehaviour {
                 CurrGameSpeed = 1.0f;
                 GetComponent<Animator>().speed = CurrGameSpeed;
                 break;
-		}
-	}
-    
-    void ResetOverWorld(){
+        }
+    }
+
+    void ResetOverWorld()
+    {
         transform.position = StartLoc;
         transform.localScale -= transform.localScale;
         grow = true;
     }
-	// Use this for initialization
-	void Start () {
-	    StartLoc = transform.position;
+    // Use this for initialization
+    void Start()
+    {
+        StartLoc = transform.position;
         Size = transform.lossyScale;
         transform.localScale -= transform.localScale;
-	}
-	
-	// Update is called once per frame
-	void Update () {
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
         if (grow) Grow();
         else Fall(Time.deltaTime);
-	}
+    }
     void Grow()
     {
-        transform.localScale += new Vector3(GrowSpeed*dripSpeed*CurrGameSpeed, GrowSpeed*dripSpeed*CurrGameSpeed, 0);
+        transform.localScale += new Vector3(GrowSpeed * dripSpeed * CurrGameSpeed, GrowSpeed * dripSpeed * CurrGameSpeed, 0);
         if (transform.localScale.x >= GrowSize)
             grow = false;
     }
     void Fall(float dt)
     {
         gameObject.transform.position += new Vector3(0, -FallSpeed * dt * CurrGameSpeed, 0);
-        if (transform.position.y <= endSpot.transform.position.y)
+    }
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.tag != "Stop")
         {
+            endSpot.transform.position = transform.position;
+            endSpot.GetComponent<Animator>().SetTrigger("PlayTrigger");
             ResetOverWorld();
         }
     }
