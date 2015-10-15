@@ -22,6 +22,7 @@ public class GunTurretBehavior : MonoBehaviour
     void ResetOverWorld()
     {
         InitialDelay = ID;
+        Running = false;
     }
     void Start()
     {

@@ -12,6 +12,7 @@ public class DrippingAcidBehavior : MonoBehaviour
     private float CurrGameSpeed = 1.0f;
     public GameObject endSpot;
     bool grow = true;
+    public bool Running;
     void SetTime(short GameSpeed)
     {
         switch (GameSpeed)
@@ -40,6 +41,7 @@ public class DrippingAcidBehavior : MonoBehaviour
         transform.position = StartLoc;
         transform.localScale -= transform.localScale;
         grow = true;
+        Running = false;
     }
     // Use this for initialization
     void Start()
@@ -52,8 +54,11 @@ public class DrippingAcidBehavior : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (grow) Grow();
-        else Fall(Time.deltaTime);
+        if (Running)
+        {
+            if (grow) Grow();
+            else Fall(Time.deltaTime);
+        }
     }
     void Grow()
     {
@@ -72,7 +77,20 @@ public class DrippingAcidBehavior : MonoBehaviour
         {
             endSpot.transform.position = transform.position;
             endSpot.GetComponent<Animator>().SetTrigger("PlayTrigger");
-            ResetOverWorld();
+            transform.position = StartLoc;
+            transform.localScale -= transform.localScale;
+            grow = true;
+        }
+    }
+    void ToggleActive(bool isActive)
+    {
+        if (isActive)
+        {
+            Running = true;
+        }
+        else
+        {
+            Running = false;
         }
     }
 }

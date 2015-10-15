@@ -19,6 +19,8 @@ public class ElectricFloorBehavior : MonoBehaviour
 
     GameObject player;
     Animator anim;
+
+    public bool Running;
     void ResetOverWorld()
     {
         anim.SetBool("isActive", false);
@@ -29,6 +31,7 @@ public class ElectricFloorBehavior : MonoBehaviour
         isActive = ia;
         timer = timeBetweenStates;
         gameObject.GetComponent<SpriteRenderer>().sprite = Resources.Load("Images/Obstacles/ElectricFloorDormantPH", typeof(Sprite)) as Sprite;
+        Running = false;
     }
     // Use this for initialization
     void Start()
@@ -44,34 +47,34 @@ public class ElectricFloorBehavior : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-
-        timer -= (Time.deltaTime * CurrGameSpeed);
-
-        if (timer <= 0.0f)
+        if (Running)
         {
-            if (isDormant)
+            timer -= (Time.deltaTime * CurrGameSpeed);
+
+            if (timer <= 0.0f)
             {
-                isDormant = false;
-                isCharging = true;
+                if (isDormant)
+                {
+                    isDormant = false;
+                    isCharging = true;
+                }
+                else if (isCharging)
+                {
+                    isCharging = false;
+                    isActive = true;
+                }
+                else if (isActive)
+                {
+                    isActive = false;
+                    isDormant = true;
+                }
+                timer = timeBetweenStates;
             }
-            else if (isCharging)
-            {
-                isCharging = false;
-                isActive = true;
-            }
-            else if (isActive)
-            {
-                isActive = false;
-                isDormant = true;
-            }
-            timer = timeBetweenStates;
+
+
+            anim.speed = animSpeed * CurrGameSpeed;
+
         }
-
-
-        anim.speed = animSpeed * CurrGameSpeed;
-
-
     }
 
     void FixedUpdate()
@@ -122,6 +125,17 @@ public class ElectricFloorBehavior : MonoBehaviour
         if(isCharging && other.gameObject.tag == "Player")
         {
             SendMessageUpwards("Refill", 0.2);
+        }
+    }
+    void ToggleActive(bool isActive)
+    {
+        if (isActive)
+        {
+            Running = true;
+        }
+        else
+        {
+            Running = false;
         }
     }
 }

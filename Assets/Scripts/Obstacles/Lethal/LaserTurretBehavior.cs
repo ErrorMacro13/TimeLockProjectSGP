@@ -12,7 +12,7 @@ public class LaserTurretBehavior : MonoBehaviour
     public bool On = false;
     public GameObject PEStart;
     public GameObject PEEnd;
-
+    public bool Running;
     float ID;
     bool IS;
 
@@ -37,6 +37,9 @@ public class LaserTurretBehavior : MonoBehaviour
     {
         On = IS;
         InitialDelay = ID;
+        Running = false;
+        PEStart.GetComponent<ParticleSystem>().Stop();
+        PEEnd.GetComponent<ParticleSystem>().Stop();
     }
 
     void Start()
@@ -53,6 +56,8 @@ public class LaserTurretBehavior : MonoBehaviour
         {
             Beam.transform.localScale = new Vector3(0, 0, 0);
         }
+        PEStart.GetComponent<ParticleSystem>().Stop();
+        PEEnd.GetComponent<ParticleSystem>().Stop();
     }
 
     // Update is called once per frame
@@ -63,57 +68,60 @@ public class LaserTurretBehavior : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (InitialDelay <= 0.0f)
+        if (Running)
         {
-            if (On)
+            if (InitialDelay <= 0.0f)
             {
-                PEStart.GetComponent<ParticleSystem>().Play();
-                PEStart.GetComponent<ParticleSystem>().playbackSpeed = CurrGameSpeed;
-                print(PEStart.GetComponent<ParticleSystem>().playbackSpeed.ToString());
-                On = false;
-                InitialDelay = ChargeUpTime;
-                Beam.transform.localScale = new Vector3(0, 0, 0);
+                if (On)
+                {
+                    PEStart.GetComponent<ParticleSystem>().Play();
+                    PEStart.GetComponent<ParticleSystem>().playbackSpeed = CurrGameSpeed;
+                    print(PEStart.GetComponent<ParticleSystem>().playbackSpeed.ToString());
+                    On = false;
+                    InitialDelay = ChargeUpTime;
+                    Beam.transform.localScale = new Vector3(0, 0, 0);
+                }
+                else
+                {
+                    PEEnd.GetComponent<ParticleSystem>().Play();
+                    PEEnd.GetComponent<ParticleSystem>().playbackSpeed = CurrGameSpeed;
+                    print(PEEnd.GetComponent<ParticleSystem>().playbackSpeed.ToString());
+                    On = true;
+                    InitialDelay = FireTime;
+                    Beam.transform.localScale = new Vector3(Beam.transform.localPosition.x * 0.88f - 1, BeamWidth, 1);
+                }
             }
             else
             {
-                PEEnd.GetComponent<ParticleSystem>().Play();
-                PEEnd.GetComponent<ParticleSystem>().playbackSpeed = CurrGameSpeed;
-                print(PEEnd.GetComponent<ParticleSystem>().playbackSpeed.ToString());
-                On = true;
-                InitialDelay = FireTime;
-                Beam.transform.localScale = new Vector3(Beam.transform.localPosition.x * 0.88f - 1, BeamWidth, 1);
-            }
-        }
-        else
-        {
-            InitialDelay -= (Time.deltaTime * CurrGameSpeed);
-            if (On)
-            {
-                float percent = InitialDelay / FireTime;
-                if (percent >= 0.9f)
-                    Beam.GetComponent<SpriteRenderer>().sprite = l0;
-                else if (percent >= 0.8f)
-                    Beam.GetComponent<SpriteRenderer>().sprite = l1;
-                else if (percent >= 0.72f)
-                    Beam.GetComponent<SpriteRenderer>().sprite = l2;
-                else if (percent >= 0.64f)
-                    Beam.GetComponent<SpriteRenderer>().sprite = l3;
-                else if (percent >= 0.58f)
-                    Beam.GetComponent<SpriteRenderer>().sprite = l4;
-                else if (percent >= 0.5f)
-                    Beam.GetComponent<SpriteRenderer>().sprite = l5;
-                else if (percent >= 0.41f)
-                    Beam.GetComponent<SpriteRenderer>().sprite = l6;
-                else if (percent >= 0.33f)
-                    Beam.GetComponent<SpriteRenderer>().sprite = l7;
-                else if (percent >= 0.25f)
-                    Beam.GetComponent<SpriteRenderer>().sprite = l8;
-                else if (percent >= 0.16f)
-                    Beam.GetComponent<SpriteRenderer>().sprite = l9;
-                else if (percent >= 0.08f)
-                    Beam.GetComponent<SpriteRenderer>().sprite = l10;
-                else if (percent >= 0.0f)
-                    Beam.GetComponent<SpriteRenderer>().sprite = l11;
+                InitialDelay -= (Time.deltaTime * CurrGameSpeed);
+                if (On)
+                {
+                    float percent = InitialDelay / FireTime;
+                    if (percent >= 0.9f)
+                        Beam.GetComponent<SpriteRenderer>().sprite = l0;
+                    else if (percent >= 0.8f)
+                        Beam.GetComponent<SpriteRenderer>().sprite = l1;
+                    else if (percent >= 0.72f)
+                        Beam.GetComponent<SpriteRenderer>().sprite = l2;
+                    else if (percent >= 0.64f)
+                        Beam.GetComponent<SpriteRenderer>().sprite = l3;
+                    else if (percent >= 0.58f)
+                        Beam.GetComponent<SpriteRenderer>().sprite = l4;
+                    else if (percent >= 0.5f)
+                        Beam.GetComponent<SpriteRenderer>().sprite = l5;
+                    else if (percent >= 0.41f)
+                        Beam.GetComponent<SpriteRenderer>().sprite = l6;
+                    else if (percent >= 0.33f)
+                        Beam.GetComponent<SpriteRenderer>().sprite = l7;
+                    else if (percent >= 0.25f)
+                        Beam.GetComponent<SpriteRenderer>().sprite = l8;
+                    else if (percent >= 0.16f)
+                        Beam.GetComponent<SpriteRenderer>().sprite = l9;
+                    else if (percent >= 0.08f)
+                        Beam.GetComponent<SpriteRenderer>().sprite = l10;
+                    else if (percent >= 0.0f)
+                        Beam.GetComponent<SpriteRenderer>().sprite = l11;
+                }
             }
         }
     }
@@ -137,5 +145,18 @@ public class LaserTurretBehavior : MonoBehaviour
         }
         PEStart.GetComponent<ParticleSystem>().playbackSpeed = CurrGameSpeed;
         PEEnd.GetComponent<ParticleSystem>().playbackSpeed = CurrGameSpeed;
+    }
+    void ToggleActive(bool isActive)
+    {
+        if (isActive)
+        {
+            Running = true;
+        }
+        else
+        {
+            Running = false;
+            PEStart.GetComponent<ParticleSystem>().Stop();
+            PEEnd.GetComponent<ParticleSystem>().Stop();
+        }
     }
 }

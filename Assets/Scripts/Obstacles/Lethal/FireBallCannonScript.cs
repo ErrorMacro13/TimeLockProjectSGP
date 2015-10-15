@@ -17,23 +17,27 @@ public class FireBallCannonScript : MonoBehaviour {
     public bool Left = false;
     public float TimeBetweenShots;
     public float InitialDelay;
+    public bool Running;
+    float SavedIDelay;
     // Use this for initialization
     void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
+        SavedIDelay = InitialDelay;
+    }
+
+    // Update is called once per frame
+    void Update () {
 	}
 
     void FixedUpdate()
     {
-        InitialDelay -= Time.deltaTime * CurrGameSpeed;
-        if (InitialDelay <= 0.0f)
+        if (Running)
         {
-            Fire();
-            InitialDelay = TimeBetweenShots;
+            InitialDelay -= Time.deltaTime * CurrGameSpeed;
+            if (InitialDelay <= 0.0f)
+            {
+                Fire();
+                InitialDelay = TimeBetweenShots;
+            }
         }
     }
 
@@ -92,5 +96,22 @@ public class FireBallCannonScript : MonoBehaviour {
                 SpeedCase = 0;
                 break;
         }
+    }
+    void ToggleActive(bool isActive)
+    {
+        if (isActive)
+        {
+            Running = true;
+        }
+        else
+        {
+            Running = false;
+        }
+    }
+    
+    void ResetOverWorld()
+    {
+        InitialDelay = SavedIDelay;
+        Running = false;
     }
 }

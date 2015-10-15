@@ -43,6 +43,7 @@ public class MovingPlatformBehavior : MonoBehaviour
         ChangeDirection = false;
         transform.position = StartLoc;
         TimeStay = StayTime;
+        Running = false;
     }
     // Use this for initialization
     void Start()

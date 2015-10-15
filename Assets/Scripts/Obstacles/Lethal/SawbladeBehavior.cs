@@ -24,6 +24,7 @@ public class SawbladeBehavior : MonoBehaviour
         transform.position = SLock;
         XPass = false;
         YPass = false;
+        Running = false;
     }
     // Update is called once per frame
     void Update()
