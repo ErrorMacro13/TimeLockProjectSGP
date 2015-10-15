@@ -65,6 +65,7 @@ public class GameWorldScript : MonoBehaviour
     private GameObject soundm;
     private int tempX;
     private int tempY = 0;
+    private float LastCheckPointTime;
     // Use this for initialization
     void Start()
     {
@@ -226,6 +227,7 @@ public class GameWorldScript : MonoBehaviour
     }
     public void IsLifeAdded(float time)
     {
+        LastCheckPointTime = time;
         if (GetTime() < time) Player.GetComponent<PlayerController>().AddLife();
         else return;
     }
@@ -250,9 +252,11 @@ public class GameWorldScript : MonoBehaviour
     }
     public int CalcScore()
     {
-        int tempT = (int)GetTime();
-        int tempS = (int)Player.GetComponent<PlayerController>().GetScore();
-        return ((int)(64000 / (1 / GetTime())) + tempS);
+        int TimeComponent = (int)GetTime() - (int)LastCheckPointTime;
+        int ScoreComponent = (int)Player.GetComponent<PlayerController>().GetScore();
+        int LifeComponent = (int)Player.GetComponent<PlayerController>().GetLives();
+        int EnergyComponent = (int)GetEnergy();
+        return ScoreComponent + 64 * TimeComponent + LifeComponent * 200 + EnergyComponent * 5;
     }
     void SavePlayersData(PlayersData data)
     {
