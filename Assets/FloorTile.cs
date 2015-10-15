@@ -1,32 +1,45 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class FloorTile : MonoBehaviour {
+public class FloorTile : MonoBehaviour
+{
     public SpriteRenderer sprite;
+    public Sprite RightSideSprite;
+    public Sprite LeftSideSprite;
+    private int total;
+    public int RightTrim = 0;
+    public int LeftTrim = 0;
     void Awake()
     {
         Vector2 spriteSize = new Vector2(sprite.bounds.size.x / transform.localScale.x, sprite.bounds.size.y / transform.localScale.y);
-        GameObject childPrefab = new GameObject();
-        SpriteRenderer childSprite = childPrefab.AddComponent<SpriteRenderer>();
-        childPrefab.transform.position = transform.position;
+
+        GameObject CenterPrefab = new GameObject();
+        SpriteRenderer childSprite = CenterPrefab.AddComponent<SpriteRenderer>();
+        CenterPrefab.transform.position = transform.position;
         childSprite.sprite = sprite.sprite;
         childSprite.transform.rotation = transform.rotation;
         childSprite.sortingOrder = 4;
+
         GameObject child;
-        int l = (int)Mathf.Round(transform.localScale.x);
-        for (int i = 1; i < l - 1; i++)
+        int l = (int)(Mathf.Round(transform.localScale.x) * .5);
+        for (int i = 1; i < l + 1; i++)
         {
-            child = Instantiate(childPrefab) as GameObject;
+            total++;
+            child = Instantiate(CenterPrefab) as GameObject;
             child.transform.position = transform.position + (new Vector3(spriteSize.x, 0, 0) * i);
             child.transform.parent = transform;
+
         }
-        for (int i = 1; i < l - 1; i++)
+        for (int i = 1; i < l + 1; i++)
         {
-            child = Instantiate(childPrefab) as GameObject;
+            total++;
+            child = Instantiate(CenterPrefab) as GameObject;
             child.transform.position = transform.position - (new Vector3(spriteSize.x, 0, 0) * i);
             child.transform.parent = transform;
+
         }
-        childPrefab.transform.parent = transform;
+        CenterPrefab.transform.parent = transform;
         sprite.enabled = false;
+        print(gameObject.name + total);
     }
 }
