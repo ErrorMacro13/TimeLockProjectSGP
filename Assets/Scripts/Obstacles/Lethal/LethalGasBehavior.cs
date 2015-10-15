@@ -12,6 +12,9 @@ public class LethalGasBehavior : MonoBehaviour
 
     float CurrGameSpeed = 1.0f;
 
+    public Texture lethalGasOverlay;
+    float gasValue;
+
     // Use this for initialization
     void Start()
     {
@@ -24,10 +27,13 @@ public class LethalGasBehavior : MonoBehaviour
         if (isColliding)
         {
             killTime -= Time.deltaTime;
+            gasValue += 0.25f * Time.deltaTime;
         }
         else
         {
             killTime = 5.0f;
+            if (gasValue > 0)
+            gasValue -= Time.deltaTime;
         }
 
         if (killTime <= 0.0f)
@@ -41,6 +47,16 @@ public class LethalGasBehavior : MonoBehaviour
 
 
         anim.speed = animSpeed * CurrGameSpeed;
+    }
+
+    void OnGUI()
+    {
+        GUI.color = new Color(34, 139, 34, gasValue);
+
+        Rect overlayRect = new Rect(new Vector3(0, 0, -20), new Vector2(Screen.width, Screen.height));
+        GUI.DrawTexture(overlayRect, lethalGasOverlay);
+
+
     }
 
     void OnTriggerEnter2D(Collider2D other)

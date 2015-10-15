@@ -17,103 +17,60 @@ public class PendulumBehavior : MonoBehaviour
     JointMotor2D motor;
     bool swingingLeft;
     bool enabled = false;
+    public Transform ball;
     // Use this for initialization
     void Start()
     {
-        hinge = gameObject.GetComponent<HingeJoint2D>();
+        hinge = GetComponentInChildren<HingeJoint2D>();
         //motor = hinge.motor;
         motor.maxMotorTorque = 5000;
         motor.motorSpeed = 120;
         swingingLeft = true;
         direction = new Vector2(50, 0);
-        pendulumCollider = GetComponent<BoxCollider2D>();
+        pendulumCollider = GetComponentInChildren<BoxCollider2D>();
     }
 
     // Update is called once per frame
     void Update()
     {
-     
-           
-            if ((hinge.jointAngle >= hinge.limits.max && swingingLeft) || (hinge.jointAngle <= hinge.limits.min && !swingingLeft))
-            {
-                swingingLeft = !swingingLeft;
-                motorSpeed = -motorSpeed;
-            }
 
 
-
-            if (nonlethal)
-            {
-                pendulumCollider.isTrigger = false;
-                tag = "Ground";
-                //if(hinge.jointAngle >= hinge.limit)
-                //{
-
-                //}
-            }
-
-            if (!collision && CurrGameSpeed > 0.25f && !nonlethal)
-            {
-                pendulumCollider.isTrigger = true;
-                tag = "Lethal";
-            }
-
-            if (collision && CurrGameSpeed > 0.25)
-            {
-                isCatapult = true;
-            }
-            else
-            {
-                isCatapult = false;
-            }
-            //if (hinge.jointAngle <= hinge.limits.min && !swingingLeft)
-            //{
-            //    swingingLeft = true;
-            //    motorSpeed = -motorSpeed;
-            //}
-
-
-            motor.motorSpeed = motorSpeed * CurrGameSpeed;
-            hinge.motor = motor;
-        
-
-
-    }
-
-    void OnCollisionEnter2D(Collision2D other)
-    {
-        if (other.gameObject.tag == "Player")
+        if ((hinge.jointAngle >= hinge.limits.max && swingingLeft) || (hinge.jointAngle <= hinge.limits.min && !swingingLeft))
         {
-            collision = true;
+            swingingLeft = !swingingLeft;
+            motorSpeed = -motorSpeed;
         }
-    }
 
-    void OnCollisionStay2D(Collision2D other)
-    {
-        if(other.gameObject.tag == "Player")
+        if (swingingLeft)
         {
-            collision = true;
-            player = other.gameObject.GetComponent<Rigidbody2D>();
-
-            if(isCatapult)
-            {
-                player.AddForce(direction);
-            }
+            if(ball.rotation.y < 90)
+            ball.Rotate(0, 60*Time.deltaTime * CurrGameSpeed, 0);
         }
-    }
-
-    void OnCollisionExit2D(Collision2D other)
-    {
-        if (other.gameObject.tag == "Player")
+        else
         {
-            collision = false;
+            if (ball.rotation.y > -90)
+            ball.Rotate(0, 60* -Time.deltaTime * CurrGameSpeed, 0);
+        }
+
+
+        if (nonlethal)
+        {
+            pendulumCollider.isTrigger = false;
+            tag = "Ground";
+        }
+        else
+        {
             nonlethal = false;
-
-            if (isCatapult)
-            {
-                player.AddForce(direction);
-            }
+            pendulumCollider.isTrigger = true;
+            tag = "Lethal";
         }
+
+
+        motor.motorSpeed = motorSpeed * CurrGameSpeed;
+        hinge.motor = motor;
+
+
+
     }
 
     void ToggleActive(bool isActive)
@@ -130,7 +87,7 @@ public class PendulumBehavior : MonoBehaviour
         {
             case 1:
                 CurrGameSpeed = 0.5f;
-                
+                nonlethal = false;
                 break;
             case 2:
                 CurrGameSpeed = 0.25f;
@@ -142,7 +99,7 @@ public class PendulumBehavior : MonoBehaviour
                 break;
             default:
                 CurrGameSpeed = 1.0f;
-                
+                nonlethal = false;
                 break;
         }
     }

@@ -11,7 +11,7 @@ public class PauseScript : MonoBehaviour
     public Canvas mainCanvas;
     public Canvas settingsCanvas;
     public Canvas instructionsCanvas;
-    public Texture pauseOverlay;
+    //public Texture pauseOverlay;
     public Camera mainCam;
 
     // Use this for initialization
@@ -61,27 +61,13 @@ public class PauseScript : MonoBehaviour
 
     void OnGUI()
     {
-        //GUIStyle pauseStyle = new GUIStyle();
-        //pauseStyle.fontSize = 40;
 
-        //Rect pause = new Rect(new Vector2((Screen.width / 2) - 40, (Screen.height / 2) - 120), new Vector2(20, 20));
-        //GUIContent PauseHeader;
 
-        Rect overlayRect = new Rect(new Vector3(0, 0, -20), new Vector2(Screen.width, Screen.height));
-       
-        ////GUIContent ResumeButton;
-        //Rect resume = new Rect(pause.x + 20, pause.y+50, 80, 40);
-        ////GUIContent SettingsButton;
-        //Rect settings = new Rect(resume.x, resume.y + 50, 80, 40);
-        ////GUIContent InstructionsButton;
-        //Rect instructions = new Rect(settings.x, settings.y + 50, 80, 40);
-        ////GUIContent MainMenuButton;
-        //Rect mainmenu = new Rect(instructions.x, instructions.y + 50, 80, 40);
-        ////GUIContent ExitGameButton;
-        //Rect exit = new Rect(mainmenu.x, mainmenu.y + 50, 80, 40);
+        //Rect overlayRect = new Rect(new Vector3(0, 0, -20), new Vector2(Screen.width, Screen.height));
+      
         if (paused)
         {
-            GUI.DrawTexture(overlayRect, pauseOverlay);
+            //GUI.DrawTexture(overlayRect, pauseOverlay);
             if (mainPause)
             {
                 settingsCanvas.enabled = false;

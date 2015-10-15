@@ -65,6 +65,8 @@ public class PlayerController : MonoBehaviour
         playerBC = GetComponent<BoxCollider2D>();
         standBox = new Vector2(playerBC.size.x, playerBC.size.y);
         slideBox = new Vector2(playerBC.size.x + .1f, playerBC.size.x +.1f);
+
+
     }
     public void SpawnPlayerAt(int CheckPointNumber = 0)
     {
