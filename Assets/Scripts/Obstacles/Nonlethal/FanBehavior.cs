@@ -15,20 +15,13 @@ public class FanBehavior : MonoBehaviour
     void Start()
     {
         anim = GetComponent<Animator>();
-
-
+        anim.SetTrigger("PauseTrigger");
     }
 
     // Update is called once per frame
     void Update()
     {
-        SetMagnitude();
-        anim.speed = animSpeed * CurrGameSpeed;
-    }
 
-    void SetMagnitude()
-    {
-        aEffector.forceMagnitude = (magnitude * CurrGameSpeed) + buffer;
     }
 
     void SetTime(short GameSpeed)
@@ -52,7 +45,19 @@ public class FanBehavior : MonoBehaviour
                 buffer = 0;
                 break;
         }
+        aEffector.forceMagnitude = (magnitude * CurrGameSpeed) + buffer;
+        anim.speed = animSpeed * CurrGameSpeed;
     }
 
-
+    void ToggleActive(bool isActive)
+    {
+        if (isActive)
+        {
+            anim.SetTrigger("PlayTrigger");
+        }
+        else
+        {
+            anim.SetTrigger("PauseTrigger");
+        }
+    }
 }

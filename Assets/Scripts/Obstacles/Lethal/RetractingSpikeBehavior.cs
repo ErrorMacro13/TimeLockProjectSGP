@@ -43,6 +43,7 @@ public class RetractingSpikeBehavior : MonoBehaviour
         transform.position = StartLoc;
         DelayEmerge = EmergeDelay;
         DelayRetract = RetractDelay;
+        Running = false;
     }
     // Use this for initialization
     void Start()
