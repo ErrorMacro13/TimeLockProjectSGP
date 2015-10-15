@@ -73,7 +73,7 @@ public class DrippingAcidBehavior : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.tag != "Stop")
+        if (other.tag != "Stop" || other.tag != "Untagged")
         {
             endSpot.transform.position = transform.position;
             endSpot.GetComponent<Animator>().SetTrigger("PlayTrigger");
