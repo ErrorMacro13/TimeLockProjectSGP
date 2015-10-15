@@ -10,7 +10,31 @@ public class SoundManager : MonoBehaviour {
     public static SoundManager ths;
     public string PlayerName = "Cody";
     public static SoundManager Instance { get; private set; }
+    float deltaTime = 0.0f;
+    public bool DisableFPS = false;
+    void Update()
+    {
+        deltaTime += (Time.deltaTime - deltaTime) * 0.1f;
+    }
+    public Vector3 a;
+    void OnGUI()
+    {
+        if (!DisableFPS)
+        {
+            int w = Screen.width, h = Screen.height;
 
+            GUIStyle style = new GUIStyle();
+
+            Rect rect = new Rect(0, a.x, w, 30/*h * 2 / 100*/);
+            style.alignment = TextAnchor.UpperLeft;
+            style.fontSize = 30;//h * 2 / 100;
+            style.normal.textColor = new Color(1.0f, 0.0f, 0.0f, 1.0f);
+            float msec = deltaTime * 1000.0f;
+            float fps = 1.0f / deltaTime;
+            string text = string.Format("{0:0.0} ms ({1:0.} fps)", msec, fps);
+            GUI.Label(rect, text, style);
+        }
+    }
     void Awake()
     {
         if (Instance != null && Instance != this)
@@ -25,10 +49,6 @@ public class SoundManager : MonoBehaviour {
     // Use this for initialization
     void Start () {
     }
-
-    // Update is called once per frame
-    void Update () {
-	}
 
     void ArcadeState()
     {
