@@ -64,7 +64,7 @@ public class PlayerController : MonoBehaviour
         anim = GetComponent<Animator>();
         playerBC = GetComponent<BoxCollider2D>();
         standBox = new Vector2(playerBC.size.x, playerBC.size.y);
-        slideBox = new Vector2(playerBC.size.y, playerBC.size.x);
+        slideBox = new Vector2(playerBC.size.x + .1f, playerBC.size.x +.1f);
     }
     public void SpawnPlayerAt(int CheckPointNumber = 0)
     {
@@ -112,6 +112,7 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
         if (isGrounded)
             CurrJumpPenalty = 1.0f;
         else
@@ -126,15 +127,14 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.S) && isGrounded)
         {
-            anim.SetBool("isSliding", true);
             isSliding = true;
-            slide.Play();
             ToggleSlide(true);
+            //slide.Play();
+            
             if (isFacingLeft)
                 speed = -maxSpeed;
             else
                 speed = maxSpeed;
-
         }
 
         if (Input.GetKey(KeyCode.S) && isSliding)
@@ -146,7 +146,6 @@ public class PlayerController : MonoBehaviour
             
             if (speed <= 0.05f && speed >= -0.05f)
             {
-                anim.SetBool("isSliding", false);
                 speed = 0;
                 isSliding = false;
                 ToggleSlide(false);
@@ -154,18 +153,12 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            anim.SetBool("isSliding", false);
+            //slide.Stop();
             isSliding = false;
             ToggleSlide(false);
         }
 
         GetComponent<Rigidbody2D>().freezeRotation = true;
-
-        if (speed > -0.75f || speed < 0.75f)
-        {
-            anim.SetBool("isRunning", false);
-
-        }
 
         if (isSlow)
             maxSpeed = 1.5f;
@@ -178,6 +171,10 @@ public class PlayerController : MonoBehaviour
         {
             world.SendMessage("Refill", 0.5f);
         }
+
+        player.velocity = new Vector2(speed, player.velocity.y);
+        anim.SetFloat("speed", Mathf.Abs(speed));
+
     }
 
     void FixedUpdate()
@@ -203,7 +200,7 @@ public class PlayerController : MonoBehaviour
             }
 
 
-
+            
 
             if (isFacingLeft)
             {
@@ -211,7 +208,6 @@ public class PlayerController : MonoBehaviour
                 transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
             }
 
-            player.velocity = new Vector2(speed, player.velocity.y);
 
 
         }
@@ -255,22 +251,13 @@ public class PlayerController : MonoBehaviour
 
         }
 
-        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
-        {
-            anim.SetBool("isRunning", true);
-        }
-        else if (Input.GetKeyUp(KeyCode.A) || Input.GetKeyUp(KeyCode.D))
-        {
-            anim.SetBool("isRunning", false);
-
-        }
-
         if (Input.GetKeyUp(KeyCode.S))
         {
-            anim.SetBool("isSliding", false);
+            //slide.Stop();
             isSliding = false;
             ToggleSlide(false);
         }
+       
 
         if (isGrounded && isJumping)
         {
@@ -283,7 +270,7 @@ public class PlayerController : MonoBehaviour
     void Jump()
     {
         jump.Play();
-        anim.SetBool("isJumping", true);
+        anim.SetTrigger("isJumping");
         player.AddForce(new Vector2(0f, jumpForce));
     }
 
@@ -295,14 +282,12 @@ public class PlayerController : MonoBehaviour
                 Death();
                 break;
             case "SlowPlayer":
-                anim.SetBool("isJumping", false);
                 GetComponent<ParticleSystem>().startColor = new Color(0, 0, 0);
                 GetComponent<ParticleSystem>().Play();
                 GetComponent<ParticleSystem>().startSpeed *= CurrGameSpeed;
                 isSlow = true;
                 break;
             case "Slippery":
-                anim.SetBool("isJumping", false);
                 GetComponent<ParticleSystem>().startColor = new Color(175, 238, 238);
                 GetComponent<ParticleSystem>().Play();
                 GetComponent<ParticleSystem>().startSpeed *= CurrGameSpeed;
@@ -313,7 +298,6 @@ public class PlayerController : MonoBehaviour
                 timeCharge = true;
                 break;
             case "Ground":
-                anim.SetBool("isJumping", false);
                 break;
         }
     }
@@ -365,12 +349,15 @@ public class PlayerController : MonoBehaviour
         {
             case "Ground":
                 isGrounded = false;
+                
                 break;
             case "SlowPlayer":
+                
                 GetComponent<ParticleSystem>().Stop();
                 isSlow = false;
                 break;
             case "Slippery":
+                
                 GetComponent<ParticleSystem>().Stop();
                 isSlippery = false;
                 isGrounded = false;
@@ -447,15 +434,19 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void ToggleSlide(bool slide)
+    void ToggleSlide(bool _slide)
     {
-        if (slide)
+        if (_slide)
         {
+            slide.Play();
+            anim.SetBool("isSliding", true);
             playerBC.size = slideBox;
             //player.transform.Rotate(0, 0, 90);
         }
         else
         {
+            slide.Stop();
+            anim.SetBool("isSliding", false);
             playerBC.size = standBox;
             //player.transform.Rotate(0, 0, -90);
 
@@ -495,9 +486,6 @@ public class PlayerController : MonoBehaviour
         world.BroadcastMessage("SetEnergy", 0.0f);
         world.BroadcastMessage("ZeroTimer");
         world.BroadcastMessage("ResetWorld");
-        anim.SetBool("isSliding", false);
-        anim.SetBool("isRunning", false);
-
     }
 
     void Die(string DeathCase)
