@@ -54,27 +54,28 @@ public class ButtonScript : MonoBehaviour
 
     public void OnMouseEnter()
     {
-        print("hovered cursor");
         SoundManager.SendMessage("Hovered");
-        mainCamera.SendMessage("Hovered", true);
+        if (mainCamera != null)
+            mainCamera.SendMessage("Hovered", true);
 
     }
 
     public void OnMouseExit()
     {
-        print("normal cursor");
         if (mainCamera != null)
             mainCamera.SendMessage("Hovered", false);
     }
 
     public void LevelSelect(int level)
     {
-        levelScroll.SendMessage("LevelHover", level);
+        if (levelScroll != null)
+            levelScroll.SendMessage("LevelHover", level);
     }
 
     public void LevelUnlock()
     {
-        levelScroll.SendMessage("Unlock");
+        if (levelScroll != null)
+            levelScroll.SendMessage("Unlock");
     }
 
     public void ToggleFS()
