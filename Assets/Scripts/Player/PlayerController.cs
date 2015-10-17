@@ -65,6 +65,7 @@ public class PlayerController : MonoBehaviour
         slideBox = new Vector2(playerBC.size.x + .1f, playerBC.size.x +.1f);
         startPosition = StartCheckPoint.transform.position;
         transform.position = startPosition;
+        print("Players start position: " + StartCheckPoint.transform.position);
 
     }
     public void SpawnPlayerAt(int CheckPointNumber = 0)
@@ -113,7 +114,7 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        print(transform.position);
         if (isGrounded)
             CurrJumpPenalty = 1.0f;
         else
