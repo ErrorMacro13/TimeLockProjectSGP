@@ -57,13 +57,14 @@ public class ButtonScript : MonoBehaviour
         print("hovered cursor");
         SoundManager.SendMessage("Hovered");
         mainCamera.SendMessage("Hovered", true);
-        
+
     }
 
     public void OnMouseExit()
     {
         print("normal cursor");
-        mainCamera.SendMessage("Hovered", false);
+        if (mainCamera != null)
+            mainCamera.SendMessage("Hovered", false);
     }
 
     public void LevelSelect(int level)

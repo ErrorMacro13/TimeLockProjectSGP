@@ -29,7 +29,7 @@ public class PauseScript : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             if (!isSettings && !isInstructions)
-            paused = TogglePause();
+                paused = TogglePause();
             else if (isSettings)
             {
                 SwitchSettings();
@@ -59,12 +59,12 @@ public class PauseScript : MonoBehaviour
         }
     }
 
-    void OnGUI()
+    void FixedUpdate()
     {
 
 
         //Rect overlayRect = new Rect(new Vector3(0, 0, -20), new Vector2(Screen.width, Screen.height));
-      
+
         if (paused)
         {
             //GUI.DrawTexture(overlayRect, pauseOverlay);
@@ -73,7 +73,7 @@ public class PauseScript : MonoBehaviour
                 settingsCanvas.enabled = false;
                 instructionsCanvas.enabled = false;
             }
-            else if(isSettings)
+            else if (isSettings)
             {
                 settingsCanvas.enabled = true;
             }
@@ -82,11 +82,11 @@ public class PauseScript : MonoBehaviour
                 instructionsCanvas.enabled = true;
                 instructionsCanvas.GetComponentInChildren<InstructionArrayScript>().enabled = true;
 
-}
-            
+            }
+
         }
 
-        
+
     }
 
     void SwitchSettings()
