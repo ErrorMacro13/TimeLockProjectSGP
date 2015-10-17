@@ -41,7 +41,6 @@ public class GameWorldScript : MonoBehaviour
 {
     public bool DisableDrain = true;
     public GameObject Player;
-    public GameObject CameraOne;
     public Texture2D HalfSpeedTexture;
     public Texture2D QuarterSpeedTexture;
     public Texture2D StopSpeedTexture;
@@ -72,7 +71,6 @@ public class GameWorldScript : MonoBehaviour
         saver = GameObject.Find("SaveDataLoader");
         soundm = GameObject.Find("SoundManager");
         Player = GameObject.Find("Player");
-        CameraOne = GameObject.Find("Main Camera");
     }
     // Update is called once per frame
     void Update()
@@ -83,7 +81,6 @@ public class GameWorldScript : MonoBehaviour
             SlowSpeed++;
             GameTime = 1;
             BroadcastMessage("SetTime", GameTime);
-            CameraOne.GetComponent<AudioSource>().pitch = .75f;
             TimeSlowAfx.Play();
         }
         //slow speed to 1/4
@@ -92,7 +89,6 @@ public class GameWorldScript : MonoBehaviour
             SlowSpeed++;
             GameTime = 2;
             BroadcastMessage("SetTime", GameTime);
-            CameraOne.GetComponent<AudioSource>().pitch = .5f;
             TimeSlowAfx.Play();
         }
         //stop speed
@@ -101,7 +97,6 @@ public class GameWorldScript : MonoBehaviour
             SlowSpeed = 0;
             GameTime = 3;
             BroadcastMessage("SetTime", GameTime);
-            CameraOne.GetComponent<AudioSource>().pitch = .1f;
             TimeSlowAfx.Play();
         }
         //resume speed
@@ -114,7 +109,6 @@ public class GameWorldScript : MonoBehaviour
             SlowSpeed = 0;
             GameTime = 0;
             BroadcastMessage("SetTime", GameTime);
-            CameraOne.GetComponent<AudioSource>().pitch = 1.0f;
 
         }
         if (GameTime != 0 && !DisableDrain)
