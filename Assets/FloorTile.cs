@@ -40,6 +40,5 @@ public class FloorTile : MonoBehaviour
         }
         CenterPrefab.transform.parent = transform;
         sprite.enabled = false;
-        print(gameObject.name + total);
     }
 }
