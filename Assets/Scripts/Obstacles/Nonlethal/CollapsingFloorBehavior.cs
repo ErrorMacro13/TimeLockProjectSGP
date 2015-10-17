@@ -28,7 +28,6 @@ public class CollapsingFloorBehavior : MonoBehaviour
     bool active = false;
     public float TimeBeforeBreak = 1.0f;
     public float PercentDone;
-    Transform TransOriginal;
 
     float TBBOriginal;
     Sprite SpriteOrignial;
@@ -38,11 +37,13 @@ public class CollapsingFloorBehavior : MonoBehaviour
     public Sprite Crumble3;
     public Sprite Crumble4;
 
+    Vector3 size;
+
 
     // Use this for initialization
     void Start()
     {
-        Transform TransOriginal = transform;
+        size = transform.localScale;
         TBBOriginal = TimeBeforeBreak;
         SpriteOrignial = GetComponent<SpriteRenderer>().sprite;
     }
@@ -90,8 +91,7 @@ public class CollapsingFloorBehavior : MonoBehaviour
 
     void ResetOverWorld()
     {
-        transform.position = TransOriginal.position;
-        transform.localScale.Set(TransOriginal.lossyScale.x, TransOriginal.lossyScale.y, TransOriginal.lossyScale.z);
+        transform.localScale = size;
 
         active = false;
         TimeBeforeBreak = TBBOriginal;
