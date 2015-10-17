@@ -6,7 +6,6 @@ public class DrippingAcidBehavior : MonoBehaviour
     private Vector3 StartLoc;
     public float dripSpeed = 0.2f;
     public float FallSpeed = 2;
-    private Vector3 Size;
     public float GrowSpeed = .005f;
     public float GrowSize = .05f;
     private float CurrGameSpeed = 1.0f;
@@ -49,7 +48,6 @@ public class DrippingAcidBehavior : MonoBehaviour
     void Start()
     {
         StartLoc = transform.position;
-        Size = transform.lossyScale;
         transform.localScale -= transform.localScale;
         acidHiss = GetComponent<AudioSource>();
         player = GameObject.Find("Player").GetComponent<Transform>();

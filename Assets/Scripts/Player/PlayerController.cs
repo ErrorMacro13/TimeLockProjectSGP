@@ -17,7 +17,6 @@ public class PlayerController : MonoBehaviour
     public float speed = 0f;
     public float CurrJumpPenalty = 1f;
     public float OriginalJumpPenalty = .05f;
-    bool JumpHeld = false;
     public Text YS;
     public Text YT;
     public Text HS;
@@ -30,7 +29,6 @@ public class PlayerController : MonoBehaviour
     bool isSlow = false;
     bool isSlippery = false;
     bool timeCharge = false;
-    bool resizeBCSlide = false;
     public float score = 0;
     public Rigidbody2D player;
     public BoxCollider2D playerBC;
@@ -122,7 +120,6 @@ public class PlayerController : MonoBehaviour
 
         if ((Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.Space)) && isGrounded)
         {
-            JumpHeld = true;
             isJumping = true;
             isGrounded = false;
         }

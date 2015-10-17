@@ -55,7 +55,6 @@ public class XMLScript : MonoBehaviour
     public Toggle FS = null;
     public Text LevelText = null;
     public AudioSource BGMusicSource = null;
-    private Settings sets = new Settings();
     private int TOTALLEVELS = 30;
     private float DefaultedGame = 0;
     void Start()
@@ -106,9 +105,6 @@ public class XMLScript : MonoBehaviour
         set.Mastervol = PlayerPrefs.GetFloat("MasterVolume");
         set.BGvol = PlayerPrefs.GetFloat("BackgroundVolume");
         set.AFXvol = PlayerPrefs.GetFloat("AFXVolume");
-        float temp = PlayerPrefs.GetFloat("FullScreen");
-        //if (temp == 1) set.FullScreen = true;
-        //else set.FullScreen = false;
         set.FullScreen = false;
         return set;
     }

@@ -8,7 +8,6 @@ public class AcidPoolBehavior : MonoBehaviour
     Animator anim;
     Transform player;
     AudioSource acidBubble;
-    bool isBubbling = false;
     bool played;
     float timing;
     // Use this for initialization

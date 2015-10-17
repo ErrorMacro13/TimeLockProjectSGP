@@ -12,9 +12,6 @@ public class CursorScript : MonoBehaviour
     public Texture2D hoverCursor3;
     public Texture2D hoverCursor4;
 
-
-    Vector2 cursorSize = new Vector2(32, 32);
-
     bool hovered = false;
     float animTime = 0.5f;
     float timer;

@@ -41,7 +41,6 @@ public class GameWorldScript : MonoBehaviour
 {
     public bool DisableDrain = true;
     public GameObject Player;
-    public GameObject CameraOne;
     public Texture2D HalfSpeedTexture;
     public Texture2D QuarterSpeedTexture;
     public Texture2D StopSpeedTexture;
@@ -57,7 +56,6 @@ public class GameWorldScript : MonoBehaviour
     private float TimeGauge = 100;
     private short GameTime = 0;
     private short SlowSpeed = 0;
-    private float ElapsedTime = 0;
     private bool ActiveTimer = true;
     private float TimeOnTimer;
     private float TimeBeforeDeath;
@@ -72,7 +70,6 @@ public class GameWorldScript : MonoBehaviour
         saver = GameObject.Find("SaveDataLoader");
         soundm = GameObject.Find("SoundManager");
         Player = GameObject.Find("Player");
-        CameraOne = GameObject.Find("Main Camera");
     }
     // Update is called once per frame
     void Update()
@@ -83,7 +80,6 @@ public class GameWorldScript : MonoBehaviour
             SlowSpeed++;
             GameTime = 1;
             BroadcastMessage("SetTime", GameTime);
-            CameraOne.GetComponent<AudioSource>().pitch = .75f;
             TimeSlowAfx.Play();
         }
         //slow speed to 1/4
@@ -92,7 +88,6 @@ public class GameWorldScript : MonoBehaviour
             SlowSpeed++;
             GameTime = 2;
             BroadcastMessage("SetTime", GameTime);
-            CameraOne.GetComponent<AudioSource>().pitch = .5f;
             TimeSlowAfx.Play();
         }
         //stop speed
@@ -101,7 +96,6 @@ public class GameWorldScript : MonoBehaviour
             SlowSpeed = 0;
             GameTime = 3;
             BroadcastMessage("SetTime", GameTime);
-            CameraOne.GetComponent<AudioSource>().pitch = .1f;
             TimeSlowAfx.Play();
         }
         //resume speed
@@ -114,7 +108,6 @@ public class GameWorldScript : MonoBehaviour
             SlowSpeed = 0;
             GameTime = 0;
             BroadcastMessage("SetTime", GameTime);
-            CameraOne.GetComponent<AudioSource>().pitch = 1.0f;
 
         }
         if (GameTime != 0 && !DisableDrain)
@@ -167,7 +160,6 @@ public class GameWorldScript : MonoBehaviour
         Rect PercentBar = new Rect(90, 50, TimeGauge + (TimeGauge / 15), 45);
         Rect TimeSymbol = new Rect(270, 35, 40, 40);
         //Rect AboveHeadBar = new Rect(420, 180, TimeGauge + 5, 5);
-        float mana = Mathf.Round(TimeGauge);
         GUI.DrawTexture(new Rect(Screen.width - 410, 30, 500, 85), TimerBG);
         GUI.DrawTexture(new Rect(10, -21, 360, 200), GauntletBG);
         GUI.skin = MeterSkin;
@@ -199,7 +191,6 @@ public class GameWorldScript : MonoBehaviour
         time = Mathf.Round(time * 10) / 10;
         Rect Timer = new Rect(Screen.width - 105, 50, 40, 20);
         Rect TimerLabel = new Rect(Screen.width - 365, 50, 100, 20);
-        ElapsedTime = time;
         if (ActiveTimer)
             TimeOnTimer = time;
         if (TimeOnTimer - TimeBeforeDeath < 0.0f)
