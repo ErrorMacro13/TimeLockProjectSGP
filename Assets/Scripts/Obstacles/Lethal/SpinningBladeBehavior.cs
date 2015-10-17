@@ -7,10 +7,18 @@ public class SpinningBladeBehavior : MonoBehaviour
     public float rotateSpeed = 10.0f;
     public bool Clockwise = false;
     public bool Running;
+    float timing;
+    bool played = false;
+    Transform player;
+    AudioSource bladeWhirl;
+
     // Use this for initialization
     void Start()
     {
         //GetComponent<SpriteRenderer>().color = new Color(1f,1f,1f,0.25f);
+        timing = Time.time;
+        player = GameObject.Find("Player").GetComponent<Transform>();
+        bladeWhirl = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -34,6 +42,23 @@ public class SpinningBladeBehavior : MonoBehaviour
                 tag = "Lethal";
                 GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 1f);
             }
+        }
+
+        if (Vector3.Distance(player.position, transform.position) <= 10f)
+        {
+            if (timing < Time.time)
+            {
+                played = true;
+                timing = Time.time + 10;
+            }
+        }
+        else if (Vector3.Distance(player.position, transform.position) >= 10f)
+            bladeWhirl.Stop();
+
+        if (played)
+        {
+            bladeWhirl.Play();
+            played = false;
         }
     }
 

@@ -10,18 +10,40 @@ public class FanBehavior : MonoBehaviour
 
     Animator anim;
     float animSpeed = 1.0f;
+    float timing;
+    bool played = false;
+    Transform player;
+    AudioSource fanWhirl;
 
     // Use this for initialization
     void Start()
     {
         anim = GetComponent<Animator>();
         anim.SetTrigger("PauseTrigger");
+        timing = Time.time;
+        player = GameObject.Find("Player").GetComponent<Transform>();
+        fanWhirl = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (Vector3.Distance(player.position, transform.position) <= 10f)
+        {
+            if (timing < Time.time)
+            {
+                played = true;
+                timing = Time.time + 10;
+            }
+        }
+        else if (Vector3.Distance(player.position, transform.position) >= 10f)
+            fanWhirl.Stop();
 
+        if (played)
+        {
+            fanWhirl.Play();
+            played = false;
+        }
     }
 
     void SetTime(short GameSpeed)

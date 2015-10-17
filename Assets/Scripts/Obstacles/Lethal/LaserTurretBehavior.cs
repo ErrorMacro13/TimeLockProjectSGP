@@ -32,6 +32,16 @@ public class LaserTurretBehavior : MonoBehaviour
     public Sprite l10;
     public Sprite l11;
 
+    float timing;
+    float timingOther;
+    bool played = false;
+    bool playedOther = false;
+    Transform player;
+    [SerializeField]
+    AudioSource laserBeam;
+    [SerializeField]
+    AudioSource chargeUp;
+
     // Use this for initialization
     void ResetOverWorld()
     {
@@ -58,6 +68,11 @@ public class LaserTurretBehavior : MonoBehaviour
         }
         PEStart.GetComponent<ParticleSystem>().Stop();
         PEEnd.GetComponent<ParticleSystem>().Stop();
+
+        timing = Time.time;
+        timingOther = Time.time;
+        player = GameObject.Find("Player").GetComponent<Transform>();
+        laserBeam = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -74,6 +89,22 @@ public class LaserTurretBehavior : MonoBehaviour
             {
                 if (On)
                 {
+                    if (Vector3.Distance(player.position, transform.position) <= 10f)
+                    {
+                        if (timing < Time.time)
+                        {
+                            played = true;
+                            timing = Time.time + 10;
+                        }
+                    }
+                    else if (Vector3.Distance(player.position, transform.position) >= 10f)
+                        chargeUp.Stop();
+
+                    if (played)
+                    {
+                        chargeUp.Play();
+                        played = false;
+                    }
                     PEStart.GetComponent<ParticleSystem>().Play();
                     PEStart.GetComponent<ParticleSystem>().playbackSpeed = CurrGameSpeed;
                     print(PEStart.GetComponent<ParticleSystem>().playbackSpeed.ToString());
@@ -96,6 +127,7 @@ public class LaserTurretBehavior : MonoBehaviour
                 InitialDelay -= (Time.deltaTime * CurrGameSpeed);
                 if (On)
                 {
+                    
                     float percent = InitialDelay / FireTime;
                     if (percent >= 0.9f)
                         Beam.GetComponent<SpriteRenderer>().sprite = l0;
@@ -121,6 +153,23 @@ public class LaserTurretBehavior : MonoBehaviour
                         Beam.GetComponent<SpriteRenderer>().sprite = l10;
                     else if (percent >= 0.0f)
                         Beam.GetComponent<SpriteRenderer>().sprite = l11;
+
+                    if (Vector3.Distance(player.position, transform.position) <= 10f)
+                    {
+                        if (timingOther < Time.time)
+                        {
+                            playedOther = true;
+                            timingOther = Time.time + 10;
+                        }
+                    }
+                    else if (Vector3.Distance(player.position, transform.position) >= 10f)
+                        laserBeam.Stop();
+
+                    if (playedOther)
+                    {
+                        laserBeam.Play();
+                        playedOther = false;
+                    }
                 }
             }
         }
