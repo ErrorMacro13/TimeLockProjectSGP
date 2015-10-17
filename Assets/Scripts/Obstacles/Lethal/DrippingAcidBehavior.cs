@@ -13,6 +13,8 @@ public class DrippingAcidBehavior : MonoBehaviour
     public GameObject endSpot;
     bool grow = true;
     public bool Running;
+    AudioSource acidHiss;
+    Transform player;
     void SetTime(short GameSpeed)
     {
         switch (GameSpeed)
@@ -49,6 +51,8 @@ public class DrippingAcidBehavior : MonoBehaviour
         StartLoc = transform.position;
         Size = transform.lossyScale;
         transform.localScale -= transform.localScale;
+        acidHiss = GetComponent<AudioSource>();
+        player = GameObject.Find("Player").GetComponent<Transform>();
     }
 
     // Update is called once per frame
@@ -77,6 +81,8 @@ public class DrippingAcidBehavior : MonoBehaviour
         {
             endSpot.transform.position = transform.position;
             endSpot.GetComponent<Animator>().SetTrigger("PlayTrigger");
+            if (Vector3.Distance(player.position, transform.position) <= 2.0f)
+                acidHiss.Play();
             transform.position = StartLoc;
             transform.localScale -= transform.localScale;
             grow = true;

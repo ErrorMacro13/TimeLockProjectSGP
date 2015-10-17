@@ -18,6 +18,10 @@ public class GunTurretBehavior : MonoBehaviour
     float ID;
 
     public bool Running;
+
+    AudioSource fire;
+    Transform player;
+
     // Use this for initialization
     void ResetOverWorld()
     {
@@ -30,6 +34,8 @@ public class GunTurretBehavior : MonoBehaviour
         Barrel = transform.Find("Barrel").gameObject;
         BarrelLocPos = Barrel.transform.localPosition;
         Barrel.transform.localPosition -= new Vector3(1.6f, 0, 0);
+        fire = GetComponent<AudioSource>();
+        player = GameObject.Find("Player").GetComponent<Transform>();
     }
 
     // Update is called once per frame
@@ -62,6 +68,11 @@ public class GunTurretBehavior : MonoBehaviour
     {
         TempBullet = Instantiate(Bullet, Barrel.transform.position, transform.rotation) as GameObject;
         TempBullet.transform.parent = transform;
+        if(Vector3.Distance(player.position, transform.position) <= 7.0f)
+        {
+            fire.Play();
+        }
+        //fire.Play();
         switch (SpeedCase)
         {
             case 0:

@@ -38,7 +38,8 @@ public class CollapsingFloorBehavior : MonoBehaviour
     public Sprite Crumble4;
 
     Vector3 size;
-
+    AudioSource crumbleNoise;
+    Transform player;
 
     // Use this for initialization
     void Start()
@@ -46,6 +47,8 @@ public class CollapsingFloorBehavior : MonoBehaviour
         size = transform.localScale;
         TBBOriginal = TimeBeforeBreak;
         SpriteOrignial = GetComponent<SpriteRenderer>().sprite;
+        player = GameObject.Find("Player").GetComponent<Transform>();
+        crumbleNoise = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -54,6 +57,9 @@ public class CollapsingFloorBehavior : MonoBehaviour
         if (active && TimeBeforeBreak > 0.0f)
         {
             TimeBeforeBreak -= Time.deltaTime * CurrGameSpeed;
+
+            if (TimeBeforeBreak <= 0.01f && (Vector3.Distance(player.position, transform.position) <= 2.0f))
+                crumbleNoise.Play();
         }
         if (TimeBeforeBreak <= 0.0f && CurrGameSpeed != 0.0f)
         {
