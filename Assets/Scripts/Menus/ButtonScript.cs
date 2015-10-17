@@ -55,15 +55,15 @@ public class ButtonScript : MonoBehaviour
     public void OnMouseEnter()
     {
         SoundManager.SendMessage("Hovered");
-        if (mainCamera != null)
-            mainCamera.SendMessage("Hovered", true);
+        //if (mainCamera != null)
+        //    mainCamera.SendMessage("Hovered", true);
 
     }
 
     public void OnMouseExit()
     {
-        if (mainCamera != null)
-            mainCamera.SendMessage("Hovered", false);
+        //if (mainCamera != null)
+        //    mainCamera.SendMessage("Hovered", false);
     }
 
     public void LevelSelect(int level)
