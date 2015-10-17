@@ -11,12 +11,10 @@ public class PendulumBehavior : MonoBehaviour
     bool nonlethal;
     bool isCatapult;
     bool collision;
-    Vector2 direction;
 
     public HingeJoint2D hinge;
     JointMotor2D motor;
     bool swingingLeft;
-    bool enabled = false;
     public Transform ball;
     // Use this for initialization
     void Start()
@@ -26,7 +24,6 @@ public class PendulumBehavior : MonoBehaviour
         motor.maxMotorTorque = 5000;
         motor.motorSpeed = 120;
         swingingLeft = true;
-        direction = new Vector2(50, 0);
         pendulumCollider = GetComponentInChildren<BoxCollider2D>();
     }
 
