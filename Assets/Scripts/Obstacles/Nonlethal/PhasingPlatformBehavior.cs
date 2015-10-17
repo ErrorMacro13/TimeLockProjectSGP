@@ -45,6 +45,8 @@ public class PhasingPlatformBehavior : MonoBehaviour {
         DelayPhazeIn = PhazeInDelay;
         DelayPhazeOut = PhazeOutDelay;
         Running = false;
+        PhazeOut = true;
+        PhazeIn = false;
     }
 	// Use this for initialization
 	void Start () {
