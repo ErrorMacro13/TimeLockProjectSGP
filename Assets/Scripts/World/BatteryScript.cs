@@ -9,6 +9,7 @@ public class BatteryScript : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         size = GetComponent<Transform>().localScale;
+        World = GameObject.Find("GameOverWorld");
 	}
 	
 	// Update is called once per frame
