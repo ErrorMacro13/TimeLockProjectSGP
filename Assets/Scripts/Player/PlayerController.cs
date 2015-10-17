@@ -55,14 +55,14 @@ public class PlayerController : MonoBehaviour
         CPS = saver.GetComponent<XMLScript>().LoadPlayersStats();
         score = CPS.score;
         lastLevelCompleted = CPS.level;
-        if(CPS.life > 0) life = CPS.life;
+        if (CPS.life > 0) life = CPS.life;
         StartCheckPoint = GameObject.Find("CheckPoint" + (CPS.level));
         print(CPS.level.ToString());
         GetComponent<Rigidbody2D>().freezeRotation = true;
         anim = GetComponent<Animator>();
         playerBC = GetComponent<BoxCollider2D>();
         standBox = new Vector2(playerBC.size.x, playerBC.size.y);
-        slideBox = new Vector2(playerBC.size.x + .1f, playerBC.size.x +.1f);
+        slideBox = new Vector2(playerBC.size.x + .1f, playerBC.size.x + .1f);
         startPosition = StartCheckPoint.transform.position;
         transform.position = startPosition;
         print("Players start position: " + StartCheckPoint.transform.position);
@@ -132,7 +132,7 @@ public class PlayerController : MonoBehaviour
             isSliding = true;
             ToggleSlide(true);
             //slide.Play();
-            
+
             if (isFacingLeft)
                 speed = -maxSpeed;
             else
@@ -145,7 +145,7 @@ public class PlayerController : MonoBehaviour
                 speed -= 0.05f;
             else if (speed < 0.0f)
                 speed += 0.05f;
-            
+
             if (speed <= 0.05f && speed >= -0.05f)
             {
                 speed = 0;
@@ -202,7 +202,7 @@ public class PlayerController : MonoBehaviour
             }
 
 
-            
+
 
             if (isFacingLeft)
             {
@@ -259,7 +259,7 @@ public class PlayerController : MonoBehaviour
             isSliding = false;
             ToggleSlide(false);
         }
-       
+
 
         if (isGrounded && isJumping)
         {
@@ -351,15 +351,15 @@ public class PlayerController : MonoBehaviour
         {
             case "Ground":
                 isGrounded = false;
-                
+
                 break;
             case "SlowPlayer":
-                
+
                 GetComponent<ParticleSystem>().Stop();
                 isSlow = false;
                 break;
             case "Slippery":
-                
+
                 GetComponent<ParticleSystem>().Stop();
                 isSlippery = false;
                 isGrounded = false;
@@ -402,14 +402,14 @@ public class PlayerController : MonoBehaviour
                 if (other.GetComponent<CheckPointScript>().EndOfLevelCheckPoint)
                 {
                     highscores = saver.GetComponent<XMLScript>().LoadLevel(other.GetComponent<CheckPointScript>().CheckpointNumber);
-                    YS.text = world.GetComponent<GameWorldScript>().CalcScore().ToString();
-                    YT.text = world.GetComponent<GameWorldScript>().GetTime().ToString();
-                    HS.text = highscores.Arcade_Scores[0].score.ToString();
-                    HT.text = highscores.Free_Play_Times[0].time.ToString();
-                    YST.text = "Your Score: ";
-                    YTT.text = "Your Time: ";
-                    HST.text = "Best Score: ";
-                    HTT.text = "Best Time: ";
+                    YS.text = "Your Score: ";
+                    YT.text = "Your Time: ";
+                    HS.text = "Best Score: ";
+                    HT.text = "Best Time: ";
+                    YST.text = world.GetComponent<GameWorldScript>().CalcScore().ToString();
+                    YTT.text = world.GetComponent<GameWorldScript>().GetTime().ToString();
+                    HST.text = highscores.Arcade_Scores[0].score.ToString();
+                    HTT.text = highscores.Free_Play_Times[0].time.ToString();               
                 }
                 else
                 {
@@ -422,6 +422,16 @@ public class PlayerController : MonoBehaviour
                     HS.text = "";
                     HT.text = "";
                 }
+                break;
+            case "HideText":
+                YST.text = "";
+                YTT.text = "";
+                HST.text = "";
+                HTT.text = "";
+                YS.text = "";
+                YT.text = "";
+                HS.text = "";
+                HT.text = "";
                 break;
         }
     }
