@@ -20,6 +20,8 @@ public class ElectricFloorBehavior : MonoBehaviour
     GameObject player;
     Animator anim;
 
+    Sprite p;
+
     public bool Running;
     void ResetOverWorld()
     {
@@ -36,6 +38,7 @@ public class ElectricFloorBehavior : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        p = GetComponent<SpriteRenderer>().sprite;
         ia = isActive;
         ic = isCharging;
         id = isDormant;
@@ -99,6 +102,8 @@ public class ElectricFloorBehavior : MonoBehaviour
             anim.SetBool("isDormant", true);
             gameObject.tag = "Ground";
         }
+        GetComponent<SpriteRenderer>().sprite = p;
+
     }
 
     void SetTime(short GameSpeed)
