@@ -90,9 +90,9 @@ public class LevelScrollScript : MonoBehaviour
 
     void LevelHover(int lvlNum)
     {
-        locked = true;
-        CurrPoint = lvlNum;
-        once = false;
+        //locked = true;
+        //CurrPoint = lvlNum;
+        //once = false;
     }
 
     void Unlock()
