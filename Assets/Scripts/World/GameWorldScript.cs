@@ -56,7 +56,6 @@ public class GameWorldScript : MonoBehaviour
     private float TimeGauge = 100;
     private short GameTime = 0;
     private short SlowSpeed = 0;
-    private float ElapsedTime = 0;
     private bool ActiveTimer = true;
     private float TimeOnTimer;
     private float TimeBeforeDeath;
@@ -161,7 +160,6 @@ public class GameWorldScript : MonoBehaviour
         Rect PercentBar = new Rect(90, 50, TimeGauge + (TimeGauge / 15), 45);
         Rect TimeSymbol = new Rect(270, 35, 40, 40);
         //Rect AboveHeadBar = new Rect(420, 180, TimeGauge + 5, 5);
-        float mana = Mathf.Round(TimeGauge);
         GUI.DrawTexture(new Rect(Screen.width - 410, 30, 500, 85), TimerBG);
         GUI.DrawTexture(new Rect(10, -21, 360, 200), GauntletBG);
         GUI.skin = MeterSkin;
@@ -193,7 +191,6 @@ public class GameWorldScript : MonoBehaviour
         time = Mathf.Round(time * 10) / 10;
         Rect Timer = new Rect(Screen.width - 105, 50, 40, 20);
         Rect TimerLabel = new Rect(Screen.width - 365, 50, 100, 20);
-        ElapsedTime = time;
         if (ActiveTimer)
             TimeOnTimer = time;
         if (TimeOnTimer - TimeBeforeDeath < 0.0f)

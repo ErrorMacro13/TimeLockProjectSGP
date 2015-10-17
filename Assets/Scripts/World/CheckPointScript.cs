@@ -19,7 +19,6 @@ public class CheckPointScript : MonoBehaviour
     public int CheckpointNumber = 0;
     public bool EndOfLevelCheckPoint = true;
     bool hit = false;
-    private GameObject saver;
     private GameObject World;
     private GameObject SM;
     private GameObject Player;
@@ -32,7 +31,6 @@ public class CheckPointScript : MonoBehaviour
         doorpos = Door.transform.position;
         Player = GameObject.Find("Player");
         World = GameObject.Find("GameOverWorld");
-        saver = GameObject.Find("SaveDataLoader");
         SM = GameObject.Find("SoundManager");
     }
 
@@ -76,6 +74,9 @@ public class CheckPointScript : MonoBehaviour
                     break;
                 case "LoadVents":
                     Application.LoadLevel("VentilationLevels");
+                    break;
+                case "LoadWin":
+                    Application.LoadLevel("Win");
                     break;
                 default:
                     break;

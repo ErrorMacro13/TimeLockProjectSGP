@@ -21,7 +21,7 @@ public class SoundManager : MonoBehaviour {
     {
         if (!DisableFPS)
         {
-            int w = Screen.width, h = Screen.height;
+            int w = Screen.width;
 
             GUIStyle style = new GUIStyle();
 
