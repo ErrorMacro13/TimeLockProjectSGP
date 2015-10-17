@@ -47,9 +47,10 @@ public class PhasingPlatformBehavior : MonoBehaviour {
         Running = false;
         PhazeOut = true;
         PhazeIn = false;
+        GetComponent<Animator>().SetTrigger("PauseTrigger");
     }
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
         child = GameObject.Find("Border");
         origTrans = transform;
         DelayPhazeIn = PhazeInDelay;

@@ -14,11 +14,13 @@ public class LethalGasBehavior : MonoBehaviour
 
     public Texture lethalGasOverlay;
     float gasValue;
+    public bool Running;
 
     // Use this for initialization
     void Start()
     {
         anim = GetComponent<Animator>();
+        GetComponent<Animator>().SetTrigger("PauseTrigger");
     }
 
     // Update is called once per frame
@@ -102,6 +104,18 @@ public class LethalGasBehavior : MonoBehaviour
                 break;
         }
     }
-
+    void ToggleActive(bool isActive)
+    {
+        if (isActive)
+        {
+            Running = true;
+            GetComponent<Animator>().SetTrigger("PlayTrigger");
+        }
+        else
+        {
+            Running = false;
+            GetComponent<Animator>().SetTrigger("PauseTrigger");
+        }
+    }
 }
 
