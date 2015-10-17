@@ -24,7 +24,6 @@ public class CheckPointScript : MonoBehaviour
     private GameObject SM;
     private GameObject Player;
     private PlayersData data = new PlayersData();
-    public GameObject[] levelObjects;
     public bool levelActive = false;
     private Vector3 doorpos;
     // Use this for initialization
