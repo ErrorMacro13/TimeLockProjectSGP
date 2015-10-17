@@ -58,14 +58,13 @@ public class PlayerController : MonoBehaviour
         if(CPS.life > 0) life = CPS.life;
         StartCheckPoint = GameObject.Find("CheckPoint" + (CPS.level));
         print(CPS.level.ToString());
-        startPosition = StartCheckPoint.transform.position;
-        transform.position = startPosition;
         GetComponent<Rigidbody2D>().freezeRotation = true;
         anim = GetComponent<Animator>();
         playerBC = GetComponent<BoxCollider2D>();
         standBox = new Vector2(playerBC.size.x, playerBC.size.y);
         slideBox = new Vector2(playerBC.size.x + .1f, playerBC.size.x +.1f);
-
+        startPosition = StartCheckPoint.transform.position;
+        transform.position = startPosition;
 
     }
     public void SpawnPlayerAt(int CheckPointNumber = 0)
