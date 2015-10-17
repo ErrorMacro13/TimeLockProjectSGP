@@ -74,12 +74,6 @@ public class CursorScript : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
-    void OnGUI()
-    {
-        //GUI.DrawTexture(new Rect(Event.current.mousePosition.x - cursorSize.x / 2, Event.current.mousePosition.y, cursorSize.x, cursorSize.y), cursor);
-    }
-
     void Hovered(bool hov)
     {
         if (hov)
