@@ -15,7 +15,8 @@ public class PendulumBehavior : MonoBehaviour
     public HingeJoint2D hinge;
     JointMotor2D motor;
     bool swingingLeft;
-    public Transform ball;
+    [SerializeField]
+    Transform ball;
     // Use this for initialization
     void Start()
     {
@@ -53,12 +54,14 @@ public class PendulumBehavior : MonoBehaviour
         if (nonlethal)
         {
             pendulumCollider.isTrigger = false;
+            ball.tag = "Ground";
             tag = "Ground";
         }
         else
         {
             nonlethal = false;
             pendulumCollider.isTrigger = true;
+            ball.tag = "Lethal";
             tag = "Lethal";
         }
 
