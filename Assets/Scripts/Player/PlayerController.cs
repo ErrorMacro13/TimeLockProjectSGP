@@ -475,18 +475,23 @@ public class PlayerController : MonoBehaviour
             switch (Application.loadedLevelName)
             {
                 case "TutorialLevels":
+                    saver.GetComponent<XMLScript>().ChangePlayersStats(0);
                     SpawnPlayerAt(0);
                     break;
                 case "AdvancedTestingLevels":
+                    saver.GetComponent<XMLScript>().ChangePlayersStats(6);
                     SpawnPlayerAt(6);
                     break;
                 case "BoilerRoomLevels":
+                    saver.GetComponent<XMLScript>().ChangePlayersStats(12);
                     SpawnPlayerAt(12);
                     break;
                 case "R&DLevels":
+                    saver.GetComponent<XMLScript>().ChangePlayersStats(18);
                     SpawnPlayerAt(18);
                     break;
                 case "VentilationLevels":
+                    saver.GetComponent<XMLScript>().ChangePlayersStats(24);
                     SpawnPlayerAt(24);
                     break;
             }
