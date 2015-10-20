@@ -25,7 +25,7 @@ public class AcidPoolBehavior : MonoBehaviour
     void Update()
     {
 
-        if (Vector3.Distance(player.position, transform.position) <= 5f)
+        if (Vector3.Distance(player.position, transform.position) <= 6.5f)
         {
             if (timing < Time.time)
             {
@@ -33,7 +33,7 @@ public class AcidPoolBehavior : MonoBehaviour
                 timing = Time.time + 10;
             }
         }
-        else if (Vector3.Distance(player.position, transform.position) >= 5f)
+        else if (Vector3.Distance(player.position, transform.position) >= 6.5f)
             acidBubble.Stop();
 
         if (played)
