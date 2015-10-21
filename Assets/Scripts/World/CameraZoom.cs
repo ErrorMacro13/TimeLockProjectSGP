@@ -10,8 +10,9 @@ public class CameraZoom : MonoBehaviour
     public float XOffset;
     public bool PlayerLocked;
     public bool VertLocked;
+    public bool CheckpointResetPoint = false;
     bool zooming = false;
-    public Vector3 Offset;
+    Vector3 Offset;
     bool update = false;
 
     // Use this for initialization
@@ -88,6 +89,11 @@ public class CameraZoom : MonoBehaviour
     {
         if (other.tag == "Player")
         {
+            if(CheckpointResetPoint)
+            {
+                Cam.transform.position = transform.position;
+                CheckpointResetPoint = false;
+            }
             Cam.SendMessage("VertLock", VertLocked);
             Offset.x = Cam.transform.position.x - GameObject.Find("Player").transform.position.x;
             Offset.z = -20;
