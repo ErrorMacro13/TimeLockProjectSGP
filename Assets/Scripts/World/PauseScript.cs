@@ -194,7 +194,7 @@ public class PauseScript : MonoBehaviour
             mainPause = false;         
             paused = false;
             Time.timeScale = 1f;
-            
+            Unpause();
         }
         else
         {
