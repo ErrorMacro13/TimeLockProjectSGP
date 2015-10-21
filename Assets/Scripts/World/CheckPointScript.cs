@@ -25,6 +25,7 @@ public class CheckPointScript : MonoBehaviour
     private PlayersData data = new PlayersData();
     public bool levelActive = false;
     private Vector3 doorpos;
+    public bool save = true;
     // Use this for initialization
     void Start()
     {
@@ -39,7 +40,6 @@ public class CheckPointScript : MonoBehaviour
     {
 
     }
-    bool save = true;
     void OnTriggerEnter2D(Collider2D other)
     {
         if (other.tag == "Player" && !hit)

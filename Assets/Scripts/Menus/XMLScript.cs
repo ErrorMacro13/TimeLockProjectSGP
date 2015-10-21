@@ -47,6 +47,7 @@ public class CurrentPlayerStats
     public int level;
     public float score;
     public int life;
+    public int ArcadeLevel;
 }
 public class XMLScript : MonoBehaviour
 {
@@ -66,7 +67,7 @@ public class XMLScript : MonoBehaviour
         if (Application.loadedLevelName == "MainMenu" && DefaultedGame == 0) StartGame();
         CurrentPlayerStats CPS = new CurrentPlayerStats();
         CPS = LoadPlayersStats();
-        if (LevelText != null) LevelText.text = "Level " + (PlayerPrefs.GetInt("PlayersLevel"));
+        if (LevelText != null) LevelText.text = "Level " + (CPS.ArcadeLevel);
         ApplySettings();
         if (Application.loadedLevelName == "HighScores") OrganizeLevelFiles();
     }
@@ -261,7 +262,7 @@ public class XMLScript : MonoBehaviour
         if (sm.GetComponent<SoundManager>().GameState == 1)
             PlayerPrefs.SetInt("PlayersLevel", CPS.level);
         else
-            CPS.level = 0;
+            CPS.ArcadeLevel = 1;
         PlayerPrefs.SetFloat("PlayersScore", CPS.score);
         PlayerPrefs.SetInt("PlayersLife", CPS.life);
         PlayerPrefs.Save();
@@ -319,8 +320,7 @@ public class XMLScript : MonoBehaviour
 
     public void ChangePlayersStats(int level)
     {
-        if (sm.GetComponent<SoundManager>().GameState == 1)
-            PlayerPrefs.SetInt("PlayersLevel", level);
+        PlayerPrefs.SetInt("PlayersLevel", level);        
         PlayerPrefs.SetFloat("PlayersScore", 0);
         PlayerPrefs.Save();
     }
