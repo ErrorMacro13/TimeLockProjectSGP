@@ -120,8 +120,8 @@ public class XMLScript : MonoBehaviour
             BGS.value = set.BGvol;
             FS.isOn = set.FullScreen;
         }
-        else if (Application.loadedLevelName == "MainMenu")
-            Screen.fullScreen = set.FullScreen;
+        //else if (Application.loadedLevelName == "MainMenu")
+            //Screen.fullScreen = set.FullScreen;
         BGMusicSource.ignoreListenerVolume = true;
         AudioListener.volume = (set.AFXvol / 100) * (set.Mastervol / 100);
         BGMusicSource.volume = (set.BGvol / 100) * (set.Mastervol / 100);
