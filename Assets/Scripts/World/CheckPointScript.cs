@@ -39,7 +39,7 @@ public class CheckPointScript : MonoBehaviour
     {
 
     }
-
+    bool save = true;
     void OnTriggerEnter2D(Collider2D other)
     {
         if (other.tag == "Player" && !hit)
@@ -47,8 +47,9 @@ public class CheckPointScript : MonoBehaviour
             hit = true;
             Door.transform.position = new Vector3(Door.transform.position.x, Door.transform.position.y - YDown, Door.transform.position.z);
             //print(Player.GetComponent<PlayerController>().GetCurrentLevel());
-            if (Player.GetComponent<PlayerController>().GetCurrentLevel() != CheckpointNumber)
+            if (save && Player.GetComponent<PlayerController>().GetCurrentLevel() != CheckpointNumber)
             {
+                save = false;
                 if (EndOfLevelCheckPoint && CheckpointNumber - 1 != -1)
                 {
                     print("Saving level");
