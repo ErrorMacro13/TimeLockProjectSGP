@@ -196,7 +196,7 @@ public class GameWorldScript : MonoBehaviour
         if (TimeOnTimer - TimeBeforeDeath < 0.0f)
             GUI.Label(Timer, 0.0f.ToString(), ManaBarStyle);
         else
-            GUI.Label(Timer, (TimeOnTimer - TimeBeforeDeath).ToString(), ManaBarStyle);
+            GUI.Label(Timer, (Mathf.Round((TimeOnTimer - TimeBeforeDeath) * 10) / 10).ToString(), ManaBarStyle);
         GUI.Label(TimerLabel, "Elapsed Time: ", ManaBarStyle);
         if (soundm.GetComponent<SoundManager>().GameState == 1)
         {

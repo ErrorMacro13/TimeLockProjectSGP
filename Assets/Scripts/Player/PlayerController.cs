@@ -395,7 +395,7 @@ public class PlayerController : MonoBehaviour
             case "CheckPoint":
                 startPosition = other.transform.position;
                 SendMessageUpwards("ResetTimer");
-                if (other.GetComponent<CheckPointScript>().EndOfLevelCheckPoint)
+                if (other.GetComponent<CheckPointScript>().EndOfLevelCheckPoint && GetCurrentLevel() != other.GetComponent<CheckPointScript>().CheckpointNumber)
                 {
                     highscores = saver.GetComponent<XMLScript>().LoadLevel(other.GetComponent<CheckPointScript>().CheckpointNumber);
                     YS.text = "Your Score: ";
