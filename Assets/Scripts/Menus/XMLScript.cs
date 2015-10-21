@@ -125,6 +125,8 @@ public class XMLScript : MonoBehaviour
         BGMusicSource.ignoreListenerVolume = true;
         AudioListener.volume = (set.AFXvol / 100) * (set.Mastervol / 100);
         BGMusicSource.volume = (set.BGvol / 100) * (set.Mastervol / 100);
+        print("BG Music volume:" + BGMusicSource.volume);
+      
     }
 
     public void SaveLevel(LevelData data, float levelNum)
