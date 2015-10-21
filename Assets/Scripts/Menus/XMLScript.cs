@@ -30,7 +30,8 @@ public class FreePlayTimes
 }
 public class LevelData
 {
-    public LevelData() {
+    public LevelData()
+    {
         for (int i = 0; i < 10; i++)
         {
             Arcade_Scores[i] = new ArcadeScores();
@@ -57,13 +58,15 @@ public class XMLScript : MonoBehaviour
     public AudioSource BGMusicSource = null;
     private int TOTALLEVELS = 30;
     private float DefaultedGame = 0;
+    GameObject sm;
     void Start()
     {
+        sm = GameObject.Find("SoundManager");
         if (PlayerPrefs.HasKey("DefaultGame")) DefaultedGame = PlayerPrefs.GetFloat("DefaultGame");
         if (Application.loadedLevelName == "MainMenu" && DefaultedGame == 0) StartGame();
         CurrentPlayerStats CPS = new CurrentPlayerStats();
         CPS = LoadPlayersStats();
-        if (LevelText != null) LevelText.text = "Level "+(CPS.level+1);
+        if (LevelText != null) LevelText.text = "Level " + (PlayerPrefs.GetInt("PlayersLevel"));
         ApplySettings();
         if (Application.loadedLevelName == "HighScores") OrganizeLevelFiles();
     }
@@ -121,7 +124,7 @@ public class XMLScript : MonoBehaviour
             FS.isOn = set.FullScreen;
         }
         //else if (Application.loadedLevelName == "MainMenu")
-            //Screen.fullScreen = set.FullScreen;
+        //Screen.fullScreen = set.FullScreen;
         BGMusicSource.ignoreListenerVolume = true;
         AudioListener.volume = (set.AFXvol / 100) * (set.Mastervol / 100);
         BGMusicSource.volume = (set.BGvol / 100) * (set.Mastervol / 100);
@@ -253,7 +256,10 @@ public class XMLScript : MonoBehaviour
     public void SavePlayersStats(CurrentPlayerStats CPS)
     {
         //save players level and score
-        PlayerPrefs.SetInt("PlayersLevel", CPS.level);
+        if (sm.GetComponent<SoundManager>().GameState == 1)
+            PlayerPrefs.SetInt("PlayersLevel", CPS.level);
+        else
+            CPS.level = 0;
         PlayerPrefs.SetFloat("PlayersScore", CPS.score);
         PlayerPrefs.SetInt("PlayersLife", CPS.life);
         PlayerPrefs.Save();
@@ -311,7 +317,8 @@ public class XMLScript : MonoBehaviour
 
     public void ChangePlayersStats(int level)
     {
-        PlayerPrefs.SetInt("PlayersLevel", level);
+        if (sm.GetComponent<SoundManager>().GameState == 1)
+            PlayerPrefs.SetInt("PlayersLevel", level);
         PlayerPrefs.SetFloat("PlayersScore", 0);
         PlayerPrefs.Save();
     }
