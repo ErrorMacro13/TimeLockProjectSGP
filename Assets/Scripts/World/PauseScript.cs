@@ -127,7 +127,6 @@ public class PauseScript : MonoBehaviour
                 backInstructions.interactable = false;
                 resumeGameInstructions.interactable = false;
 
-                eventSystem.SetSelectedGameObject(resumeGameMain.gameObject);
             }
             else if (isSettings)
             {
@@ -153,7 +152,7 @@ public class PauseScript : MonoBehaviour
                 backInstructions.interactable = false;
                 resumeGameInstructions.interactable = false;
 
-                eventSystem.SetSelectedGameObject(backSettings.gameObject);
+               // eventSystem.SetSelectedGameObject(backSettings.gameObject);
 
             }
             else if (isInstructions)
@@ -180,7 +179,7 @@ public class PauseScript : MonoBehaviour
                 sfxVolume.interactable = false;
                 backSettings.interactable = false;
                 resumeGameSettings.interactable = false;
-                eventSystem.SetSelectedGameObject(backInstructions.gameObject);
+                //eventSystem.SetSelectedGameObject(backInstructions.gameObject);
 
             }
 
@@ -201,8 +200,8 @@ public class PauseScript : MonoBehaviour
         {
             mainCanvas.enabled = true;
             mainPause = true;
-            paused = true;           
-            Time.timeScale = 0f;
+            paused = true;
+            Time.timeScale = 0f;      
         }
     }
 
@@ -212,8 +211,6 @@ public class PauseScript : MonoBehaviour
         isSettings = !isSettings;
         mainCanvas.enabled = !mainCanvas.enabled;
         settingsCanvas.enabled = !settingsCanvas.enabled;
-        
-
     }
 
     void SwitchInstructions()
@@ -250,6 +247,5 @@ public class PauseScript : MonoBehaviour
         next.interactable = false;
         backInstructions.interactable = false;
         resumeGameInstructions.interactable = false;
-        //eventSystem.sendNavigationEvents = false;
     }
 }
