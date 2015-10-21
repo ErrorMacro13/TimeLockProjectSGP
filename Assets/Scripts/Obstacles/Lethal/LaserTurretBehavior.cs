@@ -107,7 +107,6 @@ public class LaserTurretBehavior : MonoBehaviour
                     }
                     PEStart.GetComponent<ParticleSystem>().Play();
                     PEStart.GetComponent<ParticleSystem>().playbackSpeed = CurrGameSpeed;
-                    print(PEStart.GetComponent<ParticleSystem>().playbackSpeed.ToString());
                     On = false;
                     InitialDelay = ChargeUpTime;
                     Beam.transform.localScale = new Vector3(0, 0, 0);

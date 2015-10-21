@@ -112,7 +112,6 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        print(transform.position);
         if (isGrounded)
             CurrJumpPenalty = 1.0f;
         else

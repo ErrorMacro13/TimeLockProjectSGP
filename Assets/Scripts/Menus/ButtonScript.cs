@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class ButtonScript : MonoBehaviour
@@ -7,12 +8,14 @@ public class ButtonScript : MonoBehaviour
     public GameObject SoundManager;
     public GameObject mainCamera;
     public GameObject levelScroll;
+    Button button;
     // Use this for initialization
     void Start()
     {
         SoundManager = GameObject.Find("SoundManager");
         mainCamera = GameObject.Find("Main Camera");
         levelScroll = GameObject.Find("LevelScroll");
+        button = GetComponent<Button>();
     }
 
     // Update is called once per frame
@@ -55,6 +58,7 @@ public class ButtonScript : MonoBehaviour
     public void OnMouseEnter()
     {
         SoundManager.SendMessage("Hovered");
+        print(name);
         //if (mainCamera != null)
         //    mainCamera.SendMessage("Hovered", true);
 
@@ -102,5 +106,13 @@ public class ButtonScript : MonoBehaviour
     {
         GameObject.Find("GameOverWorld").SendMessage("Unpause");
         Application.LoadLevel("MainMenu");
+    }
+
+    public void Interactable(bool b)
+    {
+        if (b)
+            button.interactable = true;      
+        else
+            button.interactable = false;
     }
 }
