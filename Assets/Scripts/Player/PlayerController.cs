@@ -32,7 +32,7 @@ public class PlayerController : MonoBehaviour
     public float score = 0;
     public Rigidbody2D player;
     public BoxCollider2D playerBC;
-    
+    public CircleCollider2D playerCC;
     public GameObject world;
     public GameObject saver;
     public GameObject SM;
@@ -60,6 +60,7 @@ public class PlayerController : MonoBehaviour
         GetComponent<Rigidbody2D>().freezeRotation = true;
         anim = GetComponent<Animator>();
         playerBC = GetComponent<BoxCollider2D>();
+        playerCC = GetComponent<CircleCollider2D>();
         standBox = new Vector2(playerBC.size.x, playerBC.size.y);
         slideBox = new Vector2(playerBC.size.x + .1f, playerBC.size.x + .1f);
         startPosition = StartCheckPoint.transform.position;
@@ -455,6 +456,7 @@ public class PlayerController : MonoBehaviour
             slide.Play();
             anim.SetBool("isSliding", true);
             playerBC.size = slideBox;
+            playerCC.enabled = false;
             //player.transform.Rotate(0, 0, 90);
         }
         else
@@ -462,6 +464,7 @@ public class PlayerController : MonoBehaviour
             slide.Stop();
             anim.SetBool("isSliding", false);
             playerBC.size = standBox;
+            playerCC.enabled = true;
             //player.transform.Rotate(0, 0, -90);
 
         }
