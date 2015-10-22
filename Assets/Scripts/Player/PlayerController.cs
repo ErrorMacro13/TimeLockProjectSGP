@@ -396,8 +396,12 @@ public class PlayerController : MonoBehaviour
             case "CheckPoint":
                 startPosition = other.transform.position;
                 SendMessageUpwards("ResetTimer");
-                if (other.GetComponent<CheckPointScript>().EndOfLevelCheckPoint && GetCurrentLevel() != other.GetComponent<CheckPointScript>().CheckpointNumber)
+                print("EOLCHECKPOINT: " + other.GetComponent<CheckPointScript>().EndOfLevelCheckPoint);
+                print("CURRENTLEVEL: " + GetCurrentLevel());
+                print("CHECKPOINTNUMBER: " + other.GetComponent<CheckPointScript>().CheckpointNumber);
+                if (other.GetComponent<CheckPointScript>().EndOfLevelCheckPoint && (lastLevelCompleted != other.GetComponent<CheckPointScript>().CheckpointNumber))
                 {
+                    print("Changing text boxes to show");
                     highscores = saver.GetComponent<XMLScript>().LoadLevel(other.GetComponent<CheckPointScript>().CheckpointNumber);
                     YS.text = "Your Score: ";
                     YT.text = "Your Time: ";
@@ -410,6 +414,7 @@ public class PlayerController : MonoBehaviour
                 }
                 else
                 {
+                    print("this is why its broken!!!!!!!!!!!!!!!!!!!!!!!!");
                     YST.text = "";
                     YTT.text = "";
                     HST.text = "";
