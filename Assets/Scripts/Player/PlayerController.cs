@@ -43,6 +43,8 @@ public class PlayerController : MonoBehaviour
     public int lastLevelCompleted = 0;
     Vector2 standBox;
     Vector2 slideBox;
+    float deathdelay = .25f;
+    bool playerdied = false;
 
     Animator anim;
     // Use this for initialization
@@ -327,9 +329,6 @@ public class PlayerController : MonoBehaviour
             case "Ground":
                 isGrounded = true;
                 break;
-            case "Lethal":
-                Death();
-                break;
             case "Slippery":
                 isSlippery = true;
                 isGrounded = true;
@@ -421,19 +420,6 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void OnTriggerStay2D(Collider2D other)
-    {
-        switch (other.tag)
-        {
-            case "Lethal":
-                Death();
-                break;
-            case "Acid":
-                Death();
-                break;
-        }
-    }
-
     void OnTriggerExit2D(Collider2D other)
     {
         switch (other.tag)
@@ -468,6 +454,7 @@ public class PlayerController : MonoBehaviour
 
     void Death()
     {
+        print("DeathDeathDeath");
         death.Play();
         LoseLife();
         isSlow = false;
