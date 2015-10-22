@@ -381,28 +381,11 @@ public class PlayerController : MonoBehaviour
             case "Acid":
                 Death();
                 break;
-        }
-    }
-
-    void OnTriggerStay2D(Collider2D other)
-    {
-        switch (other.tag)
-        {
-            case "Lethal":
-                Death();
-                break;
-            case "Acid":
-                Death();
-                break;
             case "CheckPoint":
                 startPosition = other.transform.position;
                 SendMessageUpwards("ResetTimer");
-                print("EOLCHECKPOINT: " + other.GetComponent<CheckPointScript>().EndOfLevelCheckPoint);
-                print("CURRENTLEVEL: " + GetCurrentLevel());
-                print("CHECKPOINTNUMBER: " + other.GetComponent<CheckPointScript>().CheckpointNumber);
                 if (other.GetComponent<CheckPointScript>().EndOfLevelCheckPoint && (lastLevelCompleted != other.GetComponent<CheckPointScript>().CheckpointNumber))
                 {
-                    print("Changing text boxes to show");
                     highscores = saver.GetComponent<XMLScript>().LoadLevel(other.GetComponent<CheckPointScript>().CheckpointNumber);
                     YS.text = "Your Score: ";
                     YT.text = "Your Time: ";
@@ -411,11 +394,10 @@ public class PlayerController : MonoBehaviour
                     YST.text = world.GetComponent<GameWorldScript>().CalcScore().ToString();
                     YTT.text = world.GetComponent<GameWorldScript>().GetTime().ToString();
                     HST.text = highscores.Arcade_Scores[0].score.ToString();
-                    HTT.text = highscores.Free_Play_Times[0].time.ToString();               
+                    HTT.text = highscores.Free_Play_Times[0].time.ToString();
                 }
                 else
                 {
-                    print("this is why its broken!!!!!!!!!!!!!!!!!!!!!!!!");
                     YST.text = "";
                     YTT.text = "";
                     HST.text = "";
@@ -435,6 +417,19 @@ public class PlayerController : MonoBehaviour
                 YT.text = "";
                 HS.text = "";
                 HT.text = "";
+                break;
+        }
+    }
+
+    void OnTriggerStay2D(Collider2D other)
+    {
+        switch (other.tag)
+        {
+            case "Lethal":
+                Death();
+                break;
+            case "Acid":
+                Death();
                 break;
         }
     }
