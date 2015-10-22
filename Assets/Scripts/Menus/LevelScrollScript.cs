@@ -68,7 +68,7 @@ public class LevelScrollScript : MonoBehaviour
                     CurrPoint = 0;
             }
         }
-        else if (!once)
+        else if (!once && this.gameObject != null)
         {
             transform.position = new Vector3(Cam.transform.position.x, Cam.transform.position.y, 20);
             if (waypoints[CurrPoint].transform.position.x > Cam.transform.position.x)
