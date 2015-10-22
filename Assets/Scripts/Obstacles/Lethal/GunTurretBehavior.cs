@@ -128,4 +128,9 @@ public class GunTurretBehavior : MonoBehaviour
                 break;
         }
     }
+
+    void GreenTrigger()
+    {
+        TimeBetweenShots = .5f;
+    }
 }
