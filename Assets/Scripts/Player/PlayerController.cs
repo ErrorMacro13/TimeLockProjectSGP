@@ -32,6 +32,7 @@ public class PlayerController : MonoBehaviour
     public float score = 0;
     public Rigidbody2D player;
     public BoxCollider2D playerBC;
+    
     public GameObject world;
     public GameObject saver;
     public GameObject SM;
