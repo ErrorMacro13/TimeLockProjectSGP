@@ -247,7 +247,10 @@ public class GameWorldScript : MonoBehaviour
         int ScoreComponent = (int)Player.GetComponent<PlayerController>().GetScore();
         int LifeComponent = (int)Player.GetComponent<PlayerController>().GetLives();
         int EnergyComponent = (int)GetEnergy();
-        return -(ScoreComponent + 64 * TimeComponent + LifeComponent * 200 + EnergyComponent * 5);
+        int scoretotal = ScoreComponent + 64 * TimeComponent + LifeComponent * 200 + EnergyComponent * 5;
+        if (scoretotal < 0)
+            return -(scoretotal);
+        else return scoretotal;
     }
     void SavePlayersData(PlayersData data)
     {
